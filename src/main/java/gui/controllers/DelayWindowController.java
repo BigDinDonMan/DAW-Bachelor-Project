@@ -4,6 +4,9 @@ import effects.Delay;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Callback;
 import org.apache.maven.shared.utils.StringUtils;
 
@@ -15,6 +18,9 @@ public class DelayWindowController extends EffectWindowController implements Ini
 
     //todo: inject sound file buffer or whatever into window controllers
     //todo: do it in a new constructor
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private TextField delayTimeTextField;
@@ -45,14 +51,17 @@ public class DelayWindowController extends EffectWindowController implements Ini
                 }
             }
         });
+
+        closeButton.setOnAction(e -> ((Stage)root.getScene().getWindow()).close());
     }
 
-    protected void applyEffect() throws Exception {
+    protected void applyEffect() {
         TimeUnit unit = timeUnitComboBox.getSelectionModel().getSelectedItem();
         int value = Integer.parseInt(delayTimeTextField.getText());
         if (unit == null || value < 0) {
-            throw new Exception("Cannot use null TimeUnit and delay value cannot be negative!");
+            throw new IllegalArgumentException("Cannot use null TimeUnit and delay value cannot be negative!");
         }
         Delay d = new Delay(getAudioFile().getAudioFormat(), value, unit);
+        d.apply(file.getSamples(), bufferStartPoint, bufferEndPoint);
     }
 }

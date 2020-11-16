@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -15,6 +16,7 @@ import utils.AudioFile;
 import utils.AudioPlayer;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,12 @@ public class MainWindowController implements Initializable {
     private ScrollPane waveformViewersContainer;
     @FXML
     private VBox waveformsVBox;
+    @FXML
+    private Button playButton;
+    @FXML
+    private Button pauseButton;
+    @FXML
+    private Button stopButton;
 
     private List<WaveformViewersContainer> containers;
 
@@ -63,6 +71,8 @@ public class MainWindowController implements Initializable {
         } catch (IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
+        stopButton.setDisable(true);
+        pauseButton.setDisable(true);
     }
 
     @FXML
@@ -109,6 +119,13 @@ public class MainWindowController implements Initializable {
     private void playTimeline() {
         if (audioPlayer == null) {
             audioPlayer = new AudioPlayer();
+            audioPlayer.addPlaybackListener(e -> {
+                var type = e.getType();
+                boolean condition = type.equals(LineEvent.Type.CLOSE) || type.equals(LineEvent.Type.STOP);
+                playButton.setDisable(!condition);
+                pauseButton.setDisable(condition);
+                stopButton.setDisable(condition);
+            });
         }
         //if selection is present, play just the selection
         //else play everything

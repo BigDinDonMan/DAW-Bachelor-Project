@@ -304,11 +304,15 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
             var item = new MenuItem(String.join(" ", menuItemNameParts));
             item.setOnAction(e -> {
                 var windowName = klass.getSimpleName();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePrefix + windowName + fxmlFileSuffix));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + fxmlFilePrefix + windowName + fxmlFileSuffix));
                 try {
                     Parent p = loader.load();
                     EffectWindowController controller = loader.getController();
-                    controller.setAudioFile(audioFile);
+                    controller.setAudioFile(
+                            audioFile,
+                            (int)(selection.getSelectionRect().getX() * samplesPerPixel),
+                            (int)((selection.getSelectionRect().getX() + selection.getSelectionRect().getWidth()) * samplesPerPixel)
+                    );
                     Scene s = new Scene(p);
                     Stage stage = new Stage();
                     stage.setScene(s);

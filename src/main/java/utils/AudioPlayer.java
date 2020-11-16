@@ -75,6 +75,10 @@ public class AudioPlayer{
         return this.audioFile;
     }
 
+    public void addPlaybackListener(LineListener e) {
+        this.audioClip.addLineListener(e);
+    }
+
     public void play() {
         if (paused) {
             this.audioClip.start();

@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.util.Duration?>
 <AnchorPane prefHeight="517.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindowController">
    <children>
       <ScrollPane fx:id="waveformViewersContainer" fitToHeight="true" fitToWidth="true" focusTraversable="false" layoutX="72.0" layoutY="186.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="762.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
@@ -55,7 +56,7 @@
       </MenuBar>
       <HBox layoutX="17.0" layoutY="251.0" prefHeight="48.0" prefWidth="353.0" style="-fx-border-color: gray;">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#playTimeline" HBox.hgrow="ALWAYS">
+            <Button fx:id="playButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#playTimeline" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -66,7 +67,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseTimeline" HBox.hgrow="ALWAYS">
+            <Button fx:id="pauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseTimeline" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -77,7 +78,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopTimeline" HBox.hgrow="ALWAYS">
+            <Button fx:id="stopButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopTimeline" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -106,7 +107,11 @@
                   </ImageView>
                </graphic>
                <tooltip>
-                  <Tooltip text="Click to add new track line" />
+                  <Tooltip text="Click to add new track line">
+                     <showDelay>
+                        <Duration millis="500"/>
+                     </showDelay>
+                  </Tooltip>
                </tooltip>
             </Button>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteLastWaveformContainer" HBox.hgrow="ALWAYS">
@@ -121,7 +126,11 @@
                   </ImageView>
                </graphic>
                <tooltip>
-                  <Tooltip text="Click to remove last track line" />
+                  <Tooltip text="Click to remove last track line">
+                     <showDelay>
+                        <Duration millis="500"/>
+                     </showDelay>
+                  </Tooltip>
                </tooltip>
             </Button>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#extendContainersSize" HBox.hgrow="ALWAYS">
@@ -139,7 +148,11 @@
                   </ImageView>
                </graphic>
                <tooltip>
-                  <Tooltip text="Increases clip timeline width" />
+                  <Tooltip text="Increases clip timeline width">
+                     <showDelay>
+                        <Duration millis="500"/>
+                     </showDelay>
+                  </Tooltip>
                </tooltip>
             </Button>
          </children>

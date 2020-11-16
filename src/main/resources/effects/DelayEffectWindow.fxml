@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="323.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.DelayWindowController">
+<AnchorPane fx:id="root" prefHeight="323.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.DelayWindowController">
    <children>
       <HBox layoutX="145.0" layoutY="224.0" prefHeight="37.0" prefWidth="166.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
@@ -20,7 +19,7 @@
                   <Insets right="2.5" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Close" HBox.hgrow="ALWAYS">
+            <Button fx:id="closeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Close" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="2.5" />
                </HBox.margin>
