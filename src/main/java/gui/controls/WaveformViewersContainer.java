@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import utils.AudioFile;
+import utils.SoundClip;
 import utils.MathUtils;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -40,7 +40,7 @@ public class WaveformViewersContainer extends Pane {
             if (dragboard.hasFiles() && dragboard.getFiles().size() == 1) {
                 var file = dragboard.getFiles().get(0);
                 try {
-                    var audioFile = new AudioFile(file.getAbsolutePath());
+                    var audioFile = new SoundClip(file.getAbsolutePath());
                     var viewer = new WaveformViewer(audioFile);
                     viewer.setLayoutX(e.getX());
                     viewer.setLayoutY(0d);

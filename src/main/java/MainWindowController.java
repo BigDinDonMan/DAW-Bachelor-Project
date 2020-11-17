@@ -2,18 +2,22 @@ import gui.controls.WaveformViewer;
 import gui.controls.WaveformViewersContainer;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
 import utils.ArrayUtils;
-import utils.AudioFile;
+import utils.SoundClip;
 import utils.AudioPlayer;
 import utils.SoundSelectionMapper;
 
@@ -64,10 +68,11 @@ public class MainWindowController implements Initializable {
             }
         });
         try {
-            AudioFile file = new AudioFile(System.getProperty("user.dir") + File.separator + "00_otusznje.wav");
+            SoundClip clip = new SoundClip(System.getProperty("user.dir") + File.separator + "00_otusznje.wav");
+            System.out.println(clip.getAudioFormat().getSampleRate());
             WaveformViewersContainer container = new WaveformViewersContainer();
             containers.add(container);
-            WaveformViewer viewer = new WaveformViewer(file);
+            WaveformViewer viewer = new WaveformViewer(clip);
             waveformsVBox.getChildren().add(container);
             container.addWaveForm(viewer);
         } catch (IOException | UnsupportedAudioFileException e) {
@@ -133,8 +138,8 @@ public class MainWindowController implements Initializable {
         //else play everything
         WaveformViewer selected = WaveformViewer.getSelected();
         if (selected != null) {
-            if (selected.getAudioFile() != audioPlayer.getAudioFile()) {
-                audioPlayer.setAudioFile(selected.getAudioFile());
+            if (selected.getSoundClip() != audioPlayer.getSoundClip()) {
+                audioPlayer.setSoundClip(selected.getSoundClip());
             }
             audioPlayer.play();
         } else {
@@ -158,10 +163,19 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    private void exportSoundFile() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File chosenDirectory = directoryChooser.showDialog(this.mainStage);
-        if (chosenDirectory == null) return;
+    private void showExportDialog() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ExportAudioFileWindow.fxml"));
+        try {
+            Parent p = loader.load();
+            Stage stage = new Stage();
+            Scene s = new Scene(p);
+            stage.setTitle("Export file");
+            stage.setScene(s);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -175,7 +189,7 @@ public class MainWindowController implements Initializable {
         opt.ifPresentOrElse(bounds -> {
             double start = bounds.getValue0();
             double end = bounds.getValue1();
-            AudioFile file = selected.getAudioFile();
+            SoundClip file = selected.getSoundClip();
             float[] samples = file.getSamples();
             SoundSelectionMapper mapper = new SoundSelectionMapper(file.getAudioFormat().getFrameSize(), selected.getSamplesPerPixel());
             Pair<Integer, Integer> bufferBounds = mapper.map(start, end);
@@ -183,10 +197,10 @@ public class MainWindowController implements Initializable {
             if ((int)start == 0 || (int)end == (int)selected.getWidth()) {//split viewer into 2 from the start
                 float[] first = ArrayUtils.slice(samples, bufferBounds.getValue0(), bufferBounds.getValue1());
                 float[] second = ArrayUtils.slice(samples, bufferBounds.getValue1(), samples.length);
-                AudioFile f1, f2;
+                SoundClip f1, f2;
                 AudioFormat fmt = file.getAudioFormat();
-                f1 = new AudioFile(file.getAudioFormat(), first);
-                f2 = new AudioFile(AudioFile.copyFormat(fmt), second);
+                f1 = new SoundClip(file.getAudioFormat(), first);
+                f2 = new SoundClip(SoundClip.copyFormat(fmt), second);
 
                 WaveformViewersContainer container = ((WaveformViewersContainer)selected.getParent());
 
@@ -207,11 +221,11 @@ public class MainWindowController implements Initializable {
                 float[] starting = ArrayUtils.slice(samples, 0, bufferBounds.getValue0());
                 float[] middle = ArrayUtils.slice(samples, bufferBounds.getValue0(), bufferBounds.getValue1());
                 float[] ending = ArrayUtils.slice(samples, bufferBounds.getValue1(), samples.length);
-                AudioFile f1, f2, f3;
+                SoundClip f1, f2, f3;
                 AudioFormat fmt = file.getAudioFormat();
-                f1 = new AudioFile(fmt, starting);
-                f2 = new AudioFile(AudioFile.copyFormat(fmt), middle);
-                f3 = new AudioFile(AudioFile.copyFormat(fmt), ending);
+                f1 = new SoundClip(fmt, starting);
+                f2 = new SoundClip(SoundClip.copyFormat(fmt), middle);
+                f3 = new SoundClip(SoundClip.copyFormat(fmt), ending);
 
                 WaveformViewersContainer container = ((WaveformViewersContainer)selected.getParent());
 

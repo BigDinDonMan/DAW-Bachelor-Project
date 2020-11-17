@@ -27,7 +27,7 @@ import org.reflections.Reflections;
 import processing.ChannelSplit;
 import processing.Processing;
 import providers.SampleProvider;
-import utils.AudioFile;
+import utils.SoundClip;
 import utils.StringUtils;
 
 import java.io.IOException;
@@ -129,7 +129,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
 
     private SampleProvider sampleProvider;
 
-    private AudioFile audioFile;
+    private SoundClip soundClip;
 
     private Insets waveformPadding;
     private WaveformSelection selection;
@@ -151,9 +151,9 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
 
     }
 
-    public WaveformViewer(AudioFile file) {
+    public WaveformViewer(SoundClip file) {
         super();
-        this.audioFile = file;
+        this.soundClip = file;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/controls/WaveformViewer.fxml"));
         loader.setRoot(this);
@@ -173,8 +173,8 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
         viewers.add(this);
         waveformPadding = new Insets(10, 0, 10, 0);
-        if (audioFile != null) {
-            setPrefWidth(audioFile.getSamples().length / samplesPerPixel);
+        if (soundClip != null) {
+            setPrefWidth(soundClip.getSamples().length / samplesPerPixel);
             setMinWidth(getPrefWidth());
             selection = new WaveformSelection(getLayoutX(), getLayoutY(), 0, getPrefHeight(), Color.CYAN);
             selection.selectionRect.widthProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -198,7 +198,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
     }
 
     public void invalidate() {
-        float[] fileBuffer = audioFile.getSamples();
+        float[] fileBuffer = soundClip.getSamples();
         float min = 0f, max = 0f;
 
         float[] paintBuffer = new float[samplesPerPixel];
@@ -309,7 +309,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                     Parent p = loader.load();
                     EffectWindowController controller = loader.getController();
                     controller.setAudioFile(
-                            audioFile,
+                            soundClip,
                             (int)(selection.getSelectionRect().getX() * samplesPerPixel),
                             (int)((selection.getSelectionRect().getX() + selection.getSelectionRect().getWidth()) * samplesPerPixel)
                     );
@@ -360,7 +360,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
 
         MenuItem splitChannelsMenuItem = new MenuItem("Split channels");
         splitChannelsMenuItem.setOnAction(e -> {
-            ChannelSplit splitter = new ChannelSplit(audioFile);
+            ChannelSplit splitter = new ChannelSplit(soundClip);
             var channels = splitter.split();
             VBox containersParent = (VBox)this.getParent().getParent();
             for (int i = 0; i < channels.size(); ++i) {
@@ -383,8 +383,8 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
         selection.selectionColor.setValue(color);
     }
 
-    public AudioFile getAudioFile() {
-        return this.audioFile;
+    public SoundClip getSoundClip() {
+        return this.soundClip;
     }
 
     public Optional<Pair<Double, Double>> getSelectionBufferBounds() {

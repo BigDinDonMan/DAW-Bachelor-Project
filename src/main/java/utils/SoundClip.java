@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class AudioFile {
+public class SoundClip {
 
     private AudioFormat audioFormat;
     private float[] samples;
 
-    public AudioFile(String path) throws IOException, UnsupportedAudioFileException {
+    public SoundClip(String path) throws IOException, UnsupportedAudioFileException {
         AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
         this.audioFormat = stream.getFormat();
 
@@ -54,7 +54,7 @@ public class AudioFile {
         }
     }
 
-    public AudioFile(AudioFormat fmt, float[] samples) {
+    public SoundClip(AudioFormat fmt, float[] samples) {
         this.samples = samples;
         this.audioFormat = fmt;
     }
@@ -79,7 +79,7 @@ public class AudioFile {
         );
     }
 
-    public static AudioFormat copyFormat(AudioFile f) {
+    public static AudioFormat copyFormat(SoundClip f) {
         return copyFormat(f.getAudioFormat());
     }
 }

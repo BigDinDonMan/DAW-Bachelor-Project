@@ -1,25 +1,25 @@
 package gui.controllers;
 
-import utils.AudioFile;
+import utils.SoundClip;
 
 public abstract class EffectWindowController {
 
-    protected AudioFile file;
+    protected SoundClip file;
     protected int bufferStartPoint;
     protected int bufferEndPoint;
 
     protected abstract void applyEffect() throws Exception;
 
-    public AudioFile getAudioFile() {
+    public SoundClip getAudioFile() {
         return file;
     }
 
-    public void setAudioFile(AudioFile f) {
+    public void setAudioFile(SoundClip f) {
         this.file = f;
         setEditBounds(0, f.getSamples().length);
     }
 
-    public void setAudioFile(AudioFile f, int start, int end) {
+    public void setAudioFile(SoundClip f, int start, int end) {
         setAudioFile(f);
         setEditBounds(start, end);
     }

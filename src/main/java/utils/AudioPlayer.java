@@ -6,7 +6,7 @@ import java.nio.ByteOrder;
 
 public class AudioPlayer{
 
-    private AudioFile audioFile;
+    private SoundClip soundClip;
     private volatile Clip audioClip;
     private byte[] fileBytes;
 
@@ -28,19 +28,19 @@ public class AudioPlayer{
         }
     }
 
-    public AudioPlayer(AudioFile f) {
+    public AudioPlayer(SoundClip f) {
         this();
-        setAudioFile(f);
+        setSoundClip(f);
     }
 
-    public void setAudioFile(AudioFile f) {
-        this.audioFile = f;
-        fileBytes = convertFileToBytes();
+    public void setSoundClip(SoundClip f) {
+        this.soundClip = f;
+        fileBytes = convertToBytes();
     }
 
-    private byte[] convertFileToBytes() {
-        AudioFormat fmt = audioFile.getAudioFormat();
-        var samples = audioFile.getSamples();
+    private byte[] convertToBytes() {
+        AudioFormat fmt = soundClip.getAudioFormat();
+        var samples = soundClip.getSamples();
 
         var tempBuffer = new byte[samples.length * (fmt.getSampleSizeInBits() / 8)];
 
@@ -71,8 +71,8 @@ public class AudioPlayer{
         return tempBuffer;
     }
 
-    public AudioFile getAudioFile(){
-        return this.audioFile;
+    public SoundClip getSoundClip(){
+        return this.soundClip;
     }
 
     public void addPlaybackListener(LineListener e) {
@@ -87,7 +87,7 @@ public class AudioPlayer{
         }
         if (!this.audioClip.isOpen()) {
             try {
-                this.audioClip.open(audioFile.getAudioFormat(), fileBytes, 0, fileBytes.length);
+                this.audioClip.open(soundClip.getAudioFormat(), fileBytes, 0, fileBytes.length);
                 this.audioClip.start();
             } catch (LineUnavailableException e) {
                 e.printStackTrace();
