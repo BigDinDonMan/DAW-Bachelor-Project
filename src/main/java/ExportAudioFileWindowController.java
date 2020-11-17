@@ -91,6 +91,8 @@ public class ExportAudioFileWindowController implements Initializable {
                 }
             }
         });
+
+        fileLocationTextField.setEditable(false);
     }
 
     @FXML

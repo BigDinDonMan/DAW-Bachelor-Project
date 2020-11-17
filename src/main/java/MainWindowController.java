@@ -16,10 +16,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
-import utils.ArrayUtils;
-import utils.SoundClip;
-import utils.AudioPlayer;
-import utils.SoundSelectionMapper;
+import utils.*;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineEvent;
@@ -46,6 +43,8 @@ public class MainWindowController implements Initializable {
     private Button pauseButton;
     @FXML
     private Button stopButton;
+
+    private SoundClip cachedTimelineClip;
 
     private List<WaveformViewersContainer> containers;
 
@@ -143,6 +142,18 @@ public class MainWindowController implements Initializable {
             }
             audioPlayer.play();
         } else {
+            if (cachedTimelineClip == null) {
+//                TimelineToClipMapper mapper = new TimelineToClipMapper(, containers);
+//                SoundClip clip = mapper.map();
+//                cachedTimelineClip = clip;
+//                audioPlayer.setSoundClip(clip);
+//                audioPlayer.play();
+            } else {
+//                if (cachedTimelineClip != audioPlayer.getSoundClip()) {
+//                    audioPlayer.setSoundClip(cachedTimelineClip);
+//                }
+//                audioPlayer.play();
+            }
 
         }
     }

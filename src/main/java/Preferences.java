@@ -1,8 +1,9 @@
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import javax.sound.sampled.AudioFormat;
+
 public class Preferences {
-    private int globalSamplesPerPixel;
     private Paint waveformViewerGlobalSelectionColor;
 
     private static Preferences instance;
@@ -15,17 +16,7 @@ public class Preferences {
     }
 
     private Preferences() {
-        globalSamplesPerPixel = 256;
         waveformViewerGlobalSelectionColor = Color.CYAN;
-    }
-
-
-    public int getGlobalSamplesPerPixel() {
-        return globalSamplesPerPixel;
-    }
-
-    public void setGlobalSamplesPerPixel(int globalSamplesPerPixel) {
-        this.globalSamplesPerPixel = globalSamplesPerPixel;
     }
 
     public Paint getWaveformViewerGlobalSelectionColor() {
