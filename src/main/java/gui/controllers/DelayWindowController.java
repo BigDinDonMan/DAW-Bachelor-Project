@@ -51,10 +51,10 @@ public class DelayWindowController extends EffectWindowController implements Ini
                 }
             }
         });
-
-        closeButton.setOnAction(e -> ((Stage)root.getScene().getWindow()).close());
     }
 
+    @FXML
+    @Override
     protected void applyEffect() {
         TimeUnit unit = timeUnitComboBox.getSelectionModel().getSelectedItem();
         int value = Integer.parseInt(delayTimeTextField.getText());
@@ -63,5 +63,12 @@ public class DelayWindowController extends EffectWindowController implements Ini
         }
         Delay d = new Delay(getAudioFile().getAudioFormat(), value, unit);
         d.apply(file.getSamples(), bufferStartPoint, bufferEndPoint);
+        closeWindow();
+    }
+
+    @FXML
+    @Override
+    public void closeWindow() {
+        ((Stage)root.getScene().getWindow()).close();
     }
 }

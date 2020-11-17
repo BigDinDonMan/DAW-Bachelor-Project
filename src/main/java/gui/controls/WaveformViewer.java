@@ -387,10 +387,10 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
         return this.audioFile;
     }
 
-    public Optional<Pair<Integer, Integer>> getSelectionBufferBounds() {
-        Pair<Integer, Integer> rv = null;
+    public Optional<Pair<Double, Double>> getSelectionBufferBounds() {
+        Pair<Double, Double> rv = null;
         if (selection.isPresent()) {
-            rv = new Pair<>((int)selection.selectionRect.getX(), (int)(selection.selectionRect.getX() + selection.selectionRect.getWidth()));
+            rv = new Pair<>(selection.selectionRect.getX(), (selection.selectionRect.getX() + selection.selectionRect.getWidth()));
         }
         return Optional.ofNullable(rv);
     }

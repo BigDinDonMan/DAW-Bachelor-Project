@@ -11,9 +11,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.javatuples.Pair;
 import utils.ArrayUtils;
 import utils.AudioFile;
 import utils.AudioPlayer;
+import utils.SoundSelectionMapper;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineEvent;
@@ -171,25 +173,16 @@ public class MainWindowController implements Initializable {
         }
         var opt = selected.getSelectionBufferBounds();
         opt.ifPresentOrElse(bounds -> {
-            int start = bounds.getValue0();
-            int end = bounds.getValue1();
-            int samplesPerPixel = selected.getSamplesPerPixel();
-            int bufferStart = ensureAudioFrameSize(
-                    samplesPerPixel * start,
-                    selected.getAudioFile().getAudioFormat(),
-                    true
-            );
-            int bufferEnd = ensureAudioFrameSize(
-                    samplesPerPixel * end,
-                    selected.getAudioFile().getAudioFormat(),
-                    false
-            );
+            double start = bounds.getValue0();
+            double end = bounds.getValue1();
             AudioFile file = selected.getAudioFile();
             float[] samples = file.getSamples();
-            if (start == 0 && end == (int)selected.getWidth()) return;
-            if (start == 0 || end == (int)selected.getWidth()) {//split viewer into 2 from the start
-                float[] first = ArrayUtils.slice(samples, bufferStart, bufferEnd);
-                float[] second = ArrayUtils.slice(samples, bufferEnd, samples.length);
+            SoundSelectionMapper mapper = new SoundSelectionMapper(file.getAudioFormat().getFrameSize(), selected.getSamplesPerPixel());
+            Pair<Integer, Integer> bufferBounds = mapper.map(start, end);
+            if ((int)start == 0 && (int)end == (int)selected.getWidth()) return;
+            if ((int)start == 0 || (int)end == (int)selected.getWidth()) {//split viewer into 2 from the start
+                float[] first = ArrayUtils.slice(samples, bufferBounds.getValue0(), bufferBounds.getValue1());
+                float[] second = ArrayUtils.slice(samples, bufferBounds.getValue1(), samples.length);
                 AudioFile f1, f2;
                 AudioFormat fmt = file.getAudioFormat();
                 f1 = new AudioFile(file.getAudioFormat(), first);
@@ -204,16 +197,16 @@ public class MainWindowController implements Initializable {
                 v1 = new WaveformViewer(f1);
                 v2 = new WaveformViewer(f2);
 
-                container.addWaveForm(v1);
-                container.addWaveForm(v2);
+                container.addWaveForms(v1, v2);
+
                 v2.setLayoutX(v1.getPrefWidth());
                 extendContainersSize();
 
             } else { //cut it into 3 viewers
                 //todo: fix adding the items, if you cut the sound at the end it appends as if container was empty
-                float[] starting = ArrayUtils.slice(samples, 0, bufferStart);
-                float[] middle = ArrayUtils.slice(samples, bufferStart, bufferEnd);
-                float[] ending = ArrayUtils.slice(samples, bufferEnd, samples.length);
+                float[] starting = ArrayUtils.slice(samples, 0, bufferBounds.getValue0());
+                float[] middle = ArrayUtils.slice(samples, bufferBounds.getValue0(), bufferBounds.getValue1());
+                float[] ending = ArrayUtils.slice(samples, bufferBounds.getValue1(), samples.length);
                 AudioFile f1, f2, f3;
                 AudioFormat fmt = file.getAudioFormat();
                 f1 = new AudioFile(fmt, starting);
@@ -229,9 +222,7 @@ public class MainWindowController implements Initializable {
                 v1 = new WaveformViewer(f1);
                 v2 = new WaveformViewer(f2);
                 v3 = new WaveformViewer(f3);
-                container.addWaveForm(v1);
-                container.addWaveForm(v2);
-                container.addWaveForm(v3);
+                container.addWaveForms(v1, v2, v3);
                 extendContainersSize();
                 v2.setLayoutX(v1.getPrefWidth());
                 v3.setLayoutX(v1.getPrefWidth() + v2.getPrefWidth());
@@ -239,14 +230,6 @@ public class MainWindowController implements Initializable {
         }, () -> {
             new Alert(Alert.AlertType.ERROR, "Cannot cut non-selected audio fragment! Please select it first").showAndWait();
         });
-    }
-
-    private int ensureAudioFrameSize(int bufferIndex, AudioFormat fmt, boolean start) {
-        int frameSize = fmt.getFrameSize();
-        while (bufferIndex % frameSize != 0) {
-            bufferIndex = start ? bufferIndex + 1 : bufferIndex - 1;
-        }
-        return bufferIndex;
     }
 
     public Stage getMainStage() {

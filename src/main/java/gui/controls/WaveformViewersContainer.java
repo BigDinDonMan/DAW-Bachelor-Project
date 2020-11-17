@@ -101,4 +101,10 @@ public class WaveformViewersContainer extends Pane {
         setPrefWidth(newWidth);
         wv.invalidate();
     }
+
+    public void addWaveForms(WaveformViewer... items) {
+        for (WaveformViewer item : items) {
+            addWaveForm(item);
+        }
+    }
 }

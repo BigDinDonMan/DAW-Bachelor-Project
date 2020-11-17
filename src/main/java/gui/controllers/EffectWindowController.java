@@ -28,4 +28,6 @@ public abstract class EffectWindowController {
         this.bufferStartPoint = start;
         this.bufferEndPoint = end;
     }
+
+    public abstract void closeWindow();
 }

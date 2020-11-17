@@ -5,12 +5,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FlangerWindowController extends EffectWindowController implements Initializable {
 
+    @FXML
+    private AnchorPane root;
     @FXML
     private TextField sweepFrequencyTextField;
     @FXML
@@ -42,25 +46,21 @@ public class FlangerWindowController extends EffectWindowController implements I
         });
     }
 
-    protected void applyEffect() throws Exception {
-        try {
-            float sweepFrequency = Float.parseFloat(sweepFrequencyTextField.getText());
-            int sweepRange = Integer.parseInt(sweepRangeTextField.getText());
-            int delay = Integer.parseInt(delayTextField.getText());
-            //todo: apply the effect here
-            Flanger f = new Flanger(getAudioFile().getAudioFormat(), sweepFrequency, delay, sweepRange);
-        } catch (NumberFormatException nfe) {
-            //todo: show the exception dialog here
-            throw new Exception(nfe);
-        }
+
+    @FXML
+    @Override
+    protected void applyEffect() {
+        float sweepFrequency = Float.parseFloat(sweepFrequencyTextField.getText());
+        int sweepRange = Integer.parseInt(sweepRangeTextField.getText());
+        int delay = Integer.parseInt(delayTextField.getText());
+        Flanger f = new Flanger(getAudioFile().getAudioFormat(), sweepFrequency, delay, sweepRange);
+        f.apply(file.getSamples(), bufferStartPoint, bufferEndPoint);
+        closeWindow();
     }
 
     @FXML
-    private void applyEffectHandler() {
-        try {
-            applyEffect();
-        } catch (Exception e) {
-            //todo: display error message
-        }
+    @Override
+    public void closeWindow() {
+        ((Stage)root.getScene().getWindow()).close();
     }
 }
