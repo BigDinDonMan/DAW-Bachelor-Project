@@ -18,11 +18,6 @@ public class Delay implements SoundEffect {
     }
 
     @Override
-    public void apply(float[] buffer) {
-        apply(buffer, 0, buffer.length);
-    }
-
-    @Override
     public void apply(float[] buffer, int offset, int length) {
         long delay = timeUnit.toMillis(timeValue);
         int delayInSamples = (int)(delay / 1000f * audioFormat.getSampleRate());

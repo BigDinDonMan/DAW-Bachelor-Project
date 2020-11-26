@@ -14,8 +14,6 @@ import java.util.ResourceBundle;
 public class FlangerWindowController extends EffectWindowController implements Initializable {
 
     @FXML
-    private AnchorPane root;
-    @FXML
     private TextField sweepFrequencyTextField;
     @FXML
     private TextField delayTextField;
@@ -58,9 +56,4 @@ public class FlangerWindowController extends EffectWindowController implements I
         closeWindow();
     }
 
-    @FXML
-    @Override
-    public void closeWindow() {
-        ((Stage)root.getScene().getWindow()).close();
-    }
 }

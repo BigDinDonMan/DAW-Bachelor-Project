@@ -1,17 +1,19 @@
+import gui.controls.WaveformViewersContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import utils.SoundFileExporter;
+import utils.TimelineToClipMapper;
 
 import javax.sound.sampled.AudioFormat;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.ByteOrder;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ExportAudioFileWindowController implements Initializable {
 
@@ -27,12 +29,38 @@ public class ExportAudioFileWindowController implements Initializable {
     @FXML
     private AnchorPane root;
 
+    private List<WaveformViewersContainer> containers;
+
+    public ExportAudioFileWindowController(Collection<WaveformViewersContainer> containers) {
+        this.containers = new ArrayList<>(containers);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         int mono = 1, stereo = 2;
         channelsComboBox.getItems().addAll(mono, stereo, 4);
+        channelsComboBox.setButtonCell(new ListCell<>(){
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(null);
+                if (!isEmpty()) {
+                    switch (item) {
+                        case 1:
+                            setText("Mono");
+                            break;
+                        case 2:
+                            setText("Stereo");
+                            break;
+                        default:
+                            setText(String.format("%d channels", item));
+                    }
+                } else {
+                    setText(null);
+                }
+            }
+        });
         channelsComboBox.setCellFactory(callback -> new ListCell<>(){
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -69,9 +97,42 @@ public class ExportAudioFileWindowController implements Initializable {
                 }
             }
         });
+        sampleRateComboBox.setButtonCell(new ListCell<>(){
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(null);
+                if (!isEmpty()) {
+                    float kHz = item / 1000f;
+                    setText(String.format("%.2f kHz", kHz));
+                } else {
+                    setText(null);
+                }
+            }
+        });
 
         sampleSizeComboBox.getItems().addAll(1, 2, 4);
         sampleSizeComboBox.setCellFactory(callback -> new ListCell<>(){
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(null);
+                if (!isEmpty()) {
+                    switch (item) {
+                        case 1:
+                            setText("8-bit signed integer");
+                            break;
+                        case 2:
+                            setText("16-bit signed integer");
+                            break;
+                        case 4:
+                            setText("32-bit float (range <-1, 1>)");
+                            break;
+                    }
+                }
+            }
+        });
+        sampleSizeComboBox.setButtonCell(new ListCell<>(){
             @Override
             protected void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
@@ -104,14 +165,23 @@ public class ExportAudioFileWindowController implements Initializable {
         }
         var filePath = this.fileLocationTextField.getText();
         File f = new File(filePath);
-        if (!f.exists()) {
+        TimelineToClipMapper mapper = new TimelineToClipMapper(format, containers);
+        if (f.exists()) {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION, "File already exists. Export anyways?");
             Optional<ButtonType> opt = a.showAndWait();
             if (!(opt.isPresent() && opt.get().equals(ButtonType.OK))) {
                 return;
             }
         }
+        var result = mapper.map();
         //collect and export here
+        SoundFileExporter fe = new SoundFileExporter(result);
+        try {
+            fe.export(filePath);
+            System.out.println("Exported successfully to " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -128,7 +198,7 @@ public class ExportAudioFileWindowController implements Initializable {
         //frame size = sample size * channels
         int frameSize = sampleSize * channels;
         var encoding = AudioFormat.Encoding.PCM_SIGNED;
-        boolean bigEndian = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
+        boolean bigEndian = ByteOrder.nativeOrder().equals(ByteOrder.BIG_ENDIAN);
         return new AudioFormat(
                 encoding,
                 sampleRate,

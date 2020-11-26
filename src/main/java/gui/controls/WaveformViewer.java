@@ -38,12 +38,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-//todo: spiąć ze sobą timeline i waveform viewer (wyświetlić tylko tyle sampli jaka jest widoczna szerokość kontrolki)
-//todo: narysować ilość sampli równą min(szerokość_kontrolki, szerokość_scrollpane'a)
-//todo: wartość scrolla 0 - punkt 0 kontrolki, wartośćscrolla 1 -  width kontrolki (zmapować to na kontrolkę)
-//TOdo: dorobić kontrolkę przechowującą  waveformy w danym rzędzie (do wychwytywania eventu mouse drag over)
-//todo: mark na pozycji 0 w audiostreamie i potem ewentualny skip danych
-//todo: może renderować to przy użyciu animacji trochę po trochu
+
+//TODO: zrobić tak żeby viewery nie mogły na siebie nachodzić i clampować ich pozycję z początkiem/końcem najbliższego viewera (ale może wyskoczyć poza/przed niego)
 public class WaveformViewer extends javafx.scene.layout.Pane implements Initializable  {
 
     public class WaveformSelection {
@@ -324,13 +320,11 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                         invalidate();
                     }
                     successfulExit.set(true);
-                } catch (IOException ex) { //means that the effect is parameterless, so no window
-                    throw new RuntimeException(ex);
-                } catch (IllegalStateException ex) {
+                } catch (IOException | IllegalStateException ex) {
                     try {
                         Processing effect = (Processing)klass.getConstructor().newInstance();
-                        //effect.apply();
-                        //apply it here
+                        var newBuffer = effect.apply(soundClip.getSamples());
+                        soundClip = new SoundClip(soundClip.getAudioFormat(), newBuffer);
                     } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException exc) {
                         exc.printStackTrace();
                     }
@@ -363,9 +357,9 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
             ChannelSplit splitter = new ChannelSplit(soundClip);
             var channels = splitter.split();
             VBox containersParent = (VBox)this.getParent().getParent();
-            for (int i = 0; i < channels.size(); ++i) {
+            for (SoundClip channel : channels) {
                 WaveformViewersContainer container = new WaveformViewersContainer();
-                WaveformViewer viewer = new WaveformViewer(channels.get(i));
+                WaveformViewer viewer = new WaveformViewer(channel);
                 container.addWaveForm(viewer);
                 containersParent.getChildren().add(container);
             }

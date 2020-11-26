@@ -19,11 +19,6 @@ public class Flanger implements SoundEffect {
     }
 
     @Override
-    public void apply(float[] buffer) {
-        apply(buffer, 0, buffer.length);
-    }
-
-    @Override
     public void apply(float[] buffer, int offset, int length) {
         for (int i = offset; i < (length - offset) - delay - sweepRange; ++i) {
             int index = i + delay + sweepRange + (int)Math.round(sweepRange * Math.sin(2 * i * Math.PI * sweepFrequency / audioFormat.getSampleRate()));

@@ -1,3 +1,4 @@
+import effects.Overdrive;
 import gui.controls.WaveformViewer;
 import gui.controls.WaveformViewersContainer;
 import javafx.collections.ListChangeListener;
@@ -68,9 +69,9 @@ public class MainWindowController implements Initializable {
         });
         try {
             SoundClip clip = new SoundClip(System.getProperty("user.dir") + File.separator + "00_otusznje.wav");
-            System.out.println(clip.getAudioFormat().getSampleRate());
+//            Overdrive overdrive = new Overdrive();
+//            overdrive.apply(clip.getSamples());
             WaveformViewersContainer container = new WaveformViewersContainer();
-            containers.add(container);
             WaveformViewer viewer = new WaveformViewer(clip);
             waveformsVBox.getChildren().add(container);
             container.addWaveForm(viewer);
@@ -175,8 +176,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void showExportDialog() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ExportAudioFileWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExportAudioFileWindow.fxml"));
         try {
+            loader.setControllerFactory(callback -> new ExportAudioFileWindowController(containers));
             Parent p = loader.load();
             Stage stage = new Stage();
             Scene s = new Scene(p);

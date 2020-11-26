@@ -1,5 +1,8 @@
 package gui.controllers;
 
+import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import utils.SoundClip;
 
 public abstract class EffectWindowController {
@@ -7,6 +10,8 @@ public abstract class EffectWindowController {
     protected SoundClip file;
     protected int bufferStartPoint;
     protected int bufferEndPoint;
+    @FXML
+    protected AnchorPane root;
 
     protected abstract void applyEffect() throws Exception;
 
@@ -29,5 +34,8 @@ public abstract class EffectWindowController {
         this.bufferEndPoint = end;
     }
 
-    public abstract void closeWindow();
+    @FXML
+    public void closeWindow() {
+        ((Stage)root.getScene().getWindow()).close();
+    }
 }

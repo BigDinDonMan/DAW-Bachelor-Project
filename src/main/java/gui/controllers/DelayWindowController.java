@@ -20,9 +20,6 @@ public class DelayWindowController extends EffectWindowController implements Ini
     //todo: do it in a new constructor
 
     @FXML
-    private AnchorPane root;
-
-    @FXML
     private TextField delayTimeTextField;
     @FXML
     private ComboBox<TimeUnit> timeUnitComboBox;
@@ -64,11 +61,5 @@ public class DelayWindowController extends EffectWindowController implements Ini
         Delay d = new Delay(getAudioFile().getAudioFormat(), value, unit);
         d.apply(file.getSamples(), bufferStartPoint, bufferEndPoint);
         closeWindow();
-    }
-
-    @FXML
-    @Override
-    public void closeWindow() {
-        ((Stage)root.getScene().getWindow()).close();
     }
 }
