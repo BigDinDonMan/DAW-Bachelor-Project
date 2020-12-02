@@ -164,23 +164,18 @@ public class ExportAudioFileWindowController implements Initializable {
             return;
         }
         var filePath = this.fileLocationTextField.getText();
-        File f = new File(filePath);
         TimelineToClipMapper mapper = new TimelineToClipMapper(format, containers);
-        if (f.exists()) {
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "File already exists. Export anyways?");
-            Optional<ButtonType> opt = a.showAndWait();
-            if (!(opt.isPresent() && opt.get().equals(ButtonType.OK))) {
-                return;
-            }
-        }
+
         var result = mapper.map();
         //collect and export here
         SoundFileExporter fe = new SoundFileExporter(result);
         try {
             fe.export(filePath);
-            System.out.println("Exported successfully to " + filePath);
+            new Alert(Alert.AlertType.INFORMATION, "Exported successfully to " + filePath).showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            close();
         }
     }
 

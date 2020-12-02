@@ -11,6 +11,7 @@ public class AudioPlayer{
     private byte[] fileBytes;
 
     private boolean paused = false;
+    private boolean looping = false;
 
     public AudioPlayer() {
         try {
@@ -20,6 +21,9 @@ public class AudioPlayer{
                 if (type == LineEvent.Type.STOP) {
                     if (audioClip.getMicrosecondPosition() >= audioClip.getMicrosecondLength()) {
                         reset();
+                        if (looping) {
+                            play();
+                        }
                     }
                 }
             });
@@ -102,6 +106,14 @@ public class AudioPlayer{
 
     public synchronized void reset() {
         this.audioClip.close();
+    }
+
+    public boolean isLooping() {
+        return this.looping;
+    }
+
+    public void setLooping(boolean b) {
+        this.looping = b;
     }
 
     public boolean isPaused() {

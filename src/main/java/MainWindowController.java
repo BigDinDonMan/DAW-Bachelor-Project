@@ -1,4 +1,3 @@
-import effects.Overdrive;
 import gui.controls.WaveformViewer;
 import gui.controls.WaveformViewersContainer;
 import javafx.collections.ListChangeListener;
@@ -13,11 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
-import utils.*;
+import utils.ArrayUtils;
+import utils.AudioPlayer;
+import utils.SoundClip;
+import utils.SoundSelectionMapper;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineEvent;
@@ -69,6 +71,8 @@ public class MainWindowController implements Initializable {
         });
         try {
             SoundClip clip = new SoundClip(System.getProperty("user.dir") + File.separator + "00_otusznje.wav");
+//            Distortion dist = new Distortion(2.5f);
+//            dist.apply(clip.getSamples());
 //            Overdrive overdrive = new Overdrive();
 //            overdrive.apply(clip.getSamples());
             WaveformViewersContainer container = new WaveformViewersContainer();
@@ -126,6 +130,7 @@ public class MainWindowController implements Initializable {
     private void playTimeline() {
         if (audioPlayer == null) {
             audioPlayer = new AudioPlayer();
+//            audioPlayer.setLooping(true);
             audioPlayer.addPlaybackListener(e -> {
                 var type = e.getType();
                 boolean condition = type.equals(LineEvent.Type.CLOSE) || type.equals(LineEvent.Type.STOP);
@@ -137,7 +142,7 @@ public class MainWindowController implements Initializable {
         //if selection is present, play just the selection
         //else play everything
         WaveformViewer selected = WaveformViewer.getSelected();
-        if (selected != null) {
+        if (selected != null) { //fixme: pass sound clip that corresponds to selection bounds to the audioplayer
             if (selected.getSoundClip() != audioPlayer.getSoundClip()) {
                 audioPlayer.setSoundClip(selected.getSoundClip());
             }
@@ -265,5 +270,24 @@ public class MainWindowController implements Initializable {
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
+    }
+
+    @FXML
+    private void loadFile() {
+        var fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound file (*.wav)", "*.wav");
+        fileChooser.getExtensionFilters().add(wavFilter);
+        var file = fileChooser.showOpenDialog(mainStage);
+        if (file == null) return;
+        try {
+            var clip = new SoundClip(file.getAbsolutePath());
+            WaveformViewersContainer container = new WaveformViewersContainer();
+            WaveformViewer wv = new WaveformViewer(clip);
+            containers.add(container);
+            waveformsVBox.getChildren().add(container);
+            container.addWaveForm(wv);
+        } catch (IOException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
 }
