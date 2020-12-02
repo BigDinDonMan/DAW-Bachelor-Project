@@ -1,3 +1,4 @@
+import gui.controllers.RecordingWindowController;
 import gui.controls.WaveformViewer;
 import gui.controls.WaveformViewersContainer;
 import javafx.collections.ListChangeListener;
@@ -121,6 +122,24 @@ public class MainWindowController implements Initializable {
             c.setMinWidth(newWidth);
             c.setPrefWidth(newWidth);
         });
+    }
+
+    @FXML
+    private void showRecordingWindow() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/RecordingWindow.fxml"));
+        try {
+            Parent p = loader.load();
+            RecordingWindowController controller = loader.getController();
+            Scene s = new Scene(p);
+            Stage stage = new Stage();
+            stage.setOnCloseRequest(e -> controller.stopRecording());
+            stage.setScene(s);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Recording properties");
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private AudioPlayer audioPlayer;

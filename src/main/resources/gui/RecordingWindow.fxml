@@ -57,12 +57,12 @@
       </GridPane>
       <HBox alignment="CENTER" layoutX="207.0" layoutY="320.0" prefHeight="66.0" prefWidth="229.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
-            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Start" HBox.hgrow="ALWAYS">
+            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startRecording" text="Start" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" HBox.hgrow="ALWAYS">
+            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopRecording" text="Stop" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
@@ -71,7 +71,7 @@
       </HBox>
       <TextField fx:id="recordingLocationTextField" layoutX="32.0" layoutY="242.0" prefHeight="31.0" prefWidth="300.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="118.0" />
       <Label layoutX="32.0" layoutY="221.0" text="Recording file location" AnchorPane.leftAnchor="32.0" />
-      <Button layoutX="330.0" layoutY="242.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Browse" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="32.0" />
+      <Button layoutX="330.0" layoutY="242.0" mnemonicParsing="false" onAction="#chooseRecordingLocation" prefHeight="31.0" prefWidth="85.0" text="Browse" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="32.0" />
       <Label layoutX="32.0" layoutY="118.0" text="Recording length" AnchorPane.leftAnchor="35.0">
          <font>
             <Font size="19.0" />
