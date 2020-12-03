@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -16,7 +17,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.util.Duration?>
 <AnchorPane prefHeight="517.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindowController">
    <children>
       <ScrollPane fx:id="waveformViewersContainer" fitToHeight="true" fitToWidth="true" focusTraversable="false" layoutX="72.0" layoutY="186.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="762.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
@@ -28,7 +28,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Load sound file" onAction="#loadFile">
+              <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Load sound file">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
@@ -36,9 +36,9 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-               <MenuItem mnemonicParsing="false" text="Record" onAction="#showRecordingWindow">
+               <MenuItem mnemonicParsing="false" onAction="#showRecordingWindow" text="Record">
                   <accelerator>
-                     <KeyCodeCombination control="DOWN" code="R" meta="UP" shift="UP" shortcut="UP" alt="UP"/>
+                     <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                   </accelerator>
                </MenuItem>
             </items>
@@ -113,9 +113,9 @@
                </graphic>
                <tooltip>
                   <Tooltip text="Click to add new track line">
-                     <showDelay>
-                        <Duration millis="500"/>
-                     </showDelay>
+<!--                     <showDelay>-->
+<!--                        <Duration millis="500"/>-->
+<!--                     </showDelay>-->
                   </Tooltip>
                </tooltip>
             </Button>
@@ -132,9 +132,9 @@
                </graphic>
                <tooltip>
                   <Tooltip text="Click to remove last track line">
-                     <showDelay>
-                        <Duration millis="500"/>
-                     </showDelay>
+<!--                     <showDelay>-->
+<!--                        <Duration millis="500"/>-->
+<!--                     </showDelay>-->
                   </Tooltip>
                </tooltip>
             </Button>
@@ -154,13 +154,14 @@
                </graphic>
                <tooltip>
                   <Tooltip text="Increases clip timeline width">
-                     <showDelay>
-                        <Duration millis="500"/>
-                     </showDelay>
+<!--                     <showDelay>-->
+<!--                        <Duration millis="500"/>-->
+<!--                     </showDelay>-->
                   </Tooltip>
                </tooltip>
             </Button>
          </children>
       </HBox>
+      <CheckBox fx:id="loopingCheckBox" layoutX="378.0" layoutY="265.0" mnemonicParsing="false" text="Play looping" />
    </children>
 </AnchorPane>

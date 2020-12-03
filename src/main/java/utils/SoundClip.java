@@ -59,6 +59,11 @@ public class SoundClip {
         this.audioFormat = fmt;
     }
 
+    public long getDurationInMillis() {
+        var samplesPerSecond = this.audioFormat.getChannels() * this.audioFormat.getSampleRate();
+        return (long)((this.samples.length / samplesPerSecond) * 1000L);
+    }
+
     public float[] getSamples() {
         return this.samples;
     }

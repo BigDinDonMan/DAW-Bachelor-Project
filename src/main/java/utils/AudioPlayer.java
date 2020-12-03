@@ -21,9 +21,6 @@ public class AudioPlayer{
                 if (type == LineEvent.Type.STOP) {
                     if (audioClip.getMicrosecondPosition() >= audioClip.getMicrosecondLength()) {
                         reset();
-                        if (looping) {
-                            play();
-                        }
                     }
                 }
             });
@@ -84,17 +81,24 @@ public class AudioPlayer{
     }
 
     public void play() {
-        if (paused) {
-            this.audioClip.start();
-            paused = false;
-            return;
-        }
-        if (!this.audioClip.isOpen()) {
+        if (!audioClip.isOpen()) {
             try {
                 this.audioClip.open(soundClip.getAudioFormat(), fileBytes, 0, fileBytes.length);
-                this.audioClip.start();
             } catch (LineUnavailableException e) {
                 e.printStackTrace();
+            }
+        }
+        if (paused) {
+            if (looping) {
+                audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            audioClip.start();
+            paused = false;
+        } else {
+            if (looping) {
+                audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+            } else {
+                audioClip.start();
             }
         }
     }
@@ -104,8 +108,10 @@ public class AudioPlayer{
         paused = true;
     }
 
-    public synchronized void reset() {
-        this.audioClip.close();
+    public void reset() {
+        this.audioClip.stop();
+        this.audioClip.setFramePosition(0);
+        this.audioClip.setMicrosecondPosition(0);
     }
 
     public boolean isLooping() {

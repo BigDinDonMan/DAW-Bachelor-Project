@@ -1,6 +1,10 @@
 import gui.controllers.RecordingWindowController;
 import gui.controls.WaveformViewer;
 import gui.controls.WaveformViewersContainer;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,14 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.javatuples.Pair;
 import utils.ArrayUtils;
 import utils.AudioPlayer;
@@ -47,6 +50,11 @@ public class MainWindowController implements Initializable {
     private Button pauseButton;
     @FXML
     private Button stopButton;
+    @FXML
+    private CheckBox loopingCheckBox;
+
+    private Line playbackPointerLine;
+    private Timeline playbackTimeline;
 
     private SoundClip cachedTimelineClip;
 
@@ -63,10 +71,10 @@ public class MainWindowController implements Initializable {
             while (change.next()) { // this has to be here, otherwise listener throws IllegalStateException
                 if (change.wasAdded()) {
                     var added = change.getAddedSubList();
-                    containers.addAll(added.stream().map(n -> (WaveformViewersContainer)n).collect(Collectors.toList()));
+                    containers.addAll(added.stream().filter(n -> n instanceof WaveformViewersContainer).map(n -> (WaveformViewersContainer)n).collect(Collectors.toList()));
                 } else if (change.wasRemoved()) {
                     var removed = change.getRemoved();
-                    containers.removeAll(removed.stream().map(n -> (WaveformViewersContainer)n).collect(Collectors.toList()));
+                    containers.removeAll(removed.stream().filter(n -> n instanceof WaveformViewersContainer).map(n -> (WaveformViewersContainer)n).collect(Collectors.toList()));
                 }
             }
         });
@@ -85,6 +93,9 @@ public class MainWindowController implements Initializable {
         }
         stopButton.setDisable(true);
         pauseButton.setDisable(true);
+
+        playbackPointerLine = new Line();
+        playbackTimeline = new Timeline();
     }
 
     @FXML
@@ -149,7 +160,6 @@ public class MainWindowController implements Initializable {
     private void playTimeline() {
         if (audioPlayer == null) {
             audioPlayer = new AudioPlayer();
-//            audioPlayer.setLooping(true);
             audioPlayer.addPlaybackListener(e -> {
                 var type = e.getType();
                 boolean condition = type.equals(LineEvent.Type.CLOSE) || type.equals(LineEvent.Type.STOP);
@@ -165,7 +175,29 @@ public class MainWindowController implements Initializable {
             if (selected.getSoundClip() != audioPlayer.getSoundClip()) {
                 audioPlayer.setSoundClip(selected.getSoundClip());
             }
+            containers.stream().flatMap(c -> c.getChildren().stream().map(wv -> (WaveformViewer)wv)).forEach(wv -> wv.getChildren().remove(playbackPointerLine));
+            selected.getChildren().add(playbackPointerLine);
+            playbackPointerLine.setStartY(0);
+            playbackPointerLine.setEndY(selected.getHeight());
+            var loop = loopingCheckBox.isSelected();
+            playbackTimeline.setCycleCount(loop ? Animation.INDEFINITE : 1);
+            audioPlayer.setLooping(loop);
+            if (playbackTimeline.getStatus() == Animation.Status.STOPPED) {
+                playbackTimeline.getKeyFrames().clear();
+                var targetVal = selected.getLayoutX() + selected.getPrefWidth();
+                playbackTimeline.getKeyFrames().add(new KeyFrame(
+                        Duration.millis(selected.getSoundClip().getDurationInMillis()),
+                        new KeyValue(playbackPointerLine.startXProperty(), targetVal),
+                        new KeyValue(playbackPointerLine.endXProperty(), targetVal)
+                ));
+            }
+            playbackTimeline.setOnFinished(e -> {
+                selected.getChildren().remove(playbackPointerLine);
+                playbackPointerLine.setStartX(0);
+                playbackPointerLine.setEndX(0);
+            });
             audioPlayer.play();
+            playbackTimeline.play();
         } else {
             if (cachedTimelineClip == null) {
 //                TimelineToClipMapper mapper = new TimelineToClipMapper(, containers);
@@ -187,14 +219,17 @@ public class MainWindowController implements Initializable {
     private void pauseTimeline() {
         if (audioPlayer.isPlaying()) {
             audioPlayer.pause();
+            playbackTimeline.pause();
         }
     }
 
-    @FXML
+    @FXML//this isnt working, doesnt reset the clip to the start
     private void stopTimeline() {
         if (audioPlayer.isPlaying()) {
-            audioPlayer.pause();
             audioPlayer.reset();
+            playbackTimeline.stop();
+            playbackPointerLine.setStartX(0);
+            playbackPointerLine.setEndX(0);
         }
     }
 
