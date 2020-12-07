@@ -2,82 +2,37 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RecordingWindowController">
+<AnchorPane fx:id="root" prefHeight="330.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RecordingWindowController">
    <children>
-      <GridPane layoutX="14.0" layoutY="14.0" prefHeight="97.0" prefWidth="421.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="Channels">
-                     <VBox.margin>
-                        <Insets left="15.0" top="25.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ComboBox fx:id="channelsComboBox" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                  </ComboBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-               <children>
-                  <Label text="Sample rate">
-                     <VBox.margin>
-                        <Insets left="15.0" top="25.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ComboBox fx:id="sampleRateComboBox" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                  </ComboBox>
-               </children>
-            </VBox>
-         </children>
-      </GridPane>
       <HBox alignment="CENTER" layoutX="207.0" layoutY="320.0" prefHeight="66.0" prefWidth="229.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
-            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startRecording" text="Start" HBox.hgrow="ALWAYS">
+            <Button fx:id="startRecordingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startRecording" text="Start" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopRecording" text="Stop" HBox.hgrow="ALWAYS">
+            <Button fx:id="stopRecordingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopRecording" text="Stop" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <TextField fx:id="recordingLocationTextField" layoutX="32.0" layoutY="242.0" prefHeight="31.0" prefWidth="300.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="118.0" />
-      <Label layoutX="32.0" layoutY="221.0" text="Recording file location" AnchorPane.leftAnchor="32.0" />
-      <Button layoutX="330.0" layoutY="242.0" mnemonicParsing="false" onAction="#chooseRecordingLocation" prefHeight="31.0" prefWidth="85.0" text="Browse" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="32.0" />
-      <Label layoutX="32.0" layoutY="118.0" text="Recording length" AnchorPane.leftAnchor="35.0">
+      <TextField fx:id="recordingLocationTextField" layoutX="32.0" layoutY="177.0" prefHeight="31.0" prefWidth="300.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="118.0" />
+      <Label layoutX="32.0" layoutY="156.0" text="Recording file location" AnchorPane.leftAnchor="32.0" />
+      <Button layoutX="330.0" layoutY="177.0" mnemonicParsing="false" onAction="#chooseRecordingLocation" prefHeight="31.0" prefWidth="85.0" text="Browse" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="32.0" />
+      <Label layoutX="34.0" layoutY="43.0" text="Recording length" AnchorPane.leftAnchor="34.0">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <Label fx:id="recordingLengthLabel" layoutX="35.0" layoutY="153.0" text="00:00:00" AnchorPane.leftAnchor="35.0">
+      <Label fx:id="recordingLengthLabel" layoutX="34.0" layoutY="78.0" text="00:00:00" AnchorPane.leftAnchor="34.0">
          <font>
             <Font size="24.0" />
          </font>
