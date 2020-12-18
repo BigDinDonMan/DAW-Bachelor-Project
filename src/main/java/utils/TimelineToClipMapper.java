@@ -45,7 +45,7 @@ public class TimelineToClipMapper {
                     clipBuffer[i] = samples[samplesIndex];
                 }
             }
-            clips.add(new SoundClip(audioFormat, clipBuffer));
+            clips.add(new SoundClip(clipBuffer, audioFormat));
         }
 
         SoundMixer mixer = new SoundMixer();

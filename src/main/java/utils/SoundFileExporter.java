@@ -1,5 +1,7 @@
 package utils;
 
+import lombok.AllArgsConstructor;
+
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -9,13 +11,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+@AllArgsConstructor
 public class SoundFileExporter {
 
     private SoundClip clip;
-
-    public SoundFileExporter(SoundClip c) {
-        this.clip = c;
-    }
 
     public void export(String path) throws IOException {
         File f = new File(path);

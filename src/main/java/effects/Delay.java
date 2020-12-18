@@ -1,21 +1,17 @@
 package effects;
 
+import lombok.AllArgsConstructor;
 import utils.MathUtils;
 
 import javax.sound.sampled.AudioFormat;
 import java.util.concurrent.TimeUnit;
 
+@AllArgsConstructor
 public class Delay implements SoundEffect {
 
     private AudioFormat audioFormat;
-    private TimeUnit timeUnit;
     private int timeValue;
-
-    public Delay(AudioFormat fmt, int value, TimeUnit unit) {
-        this.audioFormat = fmt;
-        this.timeValue = value;
-        this.timeUnit = unit;
-    }
+    private TimeUnit timeUnit;
 
     @Override
     public void apply(float[] buffer, int offset, int length) {

@@ -1,8 +1,6 @@
 package processing;
 
 import javax.sound.sampled.AudioFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 //to interpolate between numbers; if going from 1 channel to 2 channels, go like this: lerp(a, b, 0), lerp(a, b, 0.5). from 1 to 4 it goes 0, 0,25, 0.5, 0.75 etc.
 public class Upsampler implements Processing {

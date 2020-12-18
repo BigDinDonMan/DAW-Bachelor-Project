@@ -1,16 +1,24 @@
 package utils;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.sound.sampled.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class AudioPlayer{
 
+    @Getter
     private SoundClip soundClip;
     private volatile Clip audioClip;
     private byte[] fileBytes;
 
+    @Getter
+    @Setter
     private boolean paused = false;
+    @Getter
+    @Setter
     private boolean looping = false;
 
     public AudioPlayer() {
@@ -72,10 +80,6 @@ public class AudioPlayer{
         return tempBuffer;
     }
 
-    public SoundClip getSoundClip(){
-        return this.soundClip;
-    }
-
     public void addPlaybackListener(LineListener e) {
         this.audioClip.addLineListener(e);
     }
@@ -112,18 +116,6 @@ public class AudioPlayer{
         this.audioClip.stop();
         this.audioClip.setFramePosition(0);
         this.audioClip.setMicrosecondPosition(0);
-    }
-
-    public boolean isLooping() {
-        return this.looping;
-    }
-
-    public void setLooping(boolean b) {
-        this.looping = b;
-    }
-
-    public boolean isPaused() {
-        return this.paused;
     }
 
     public boolean isPlaying() {

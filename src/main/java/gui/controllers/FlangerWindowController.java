@@ -52,7 +52,7 @@ public class FlangerWindowController extends EffectWindowController implements I
         int sweepRange = Integer.parseInt(sweepRangeTextField.getText());
         int delay = Integer.parseInt(delayTextField.getText());
         Flanger f = new Flanger(getAudioFile().getAudioFormat(), sweepFrequency, delay, sweepRange);
-        f.apply(file.getSamples(), bufferStartPoint, bufferEndPoint);
+        f.apply(file.getSamples(), bufferStartPoint, bufferEndPoint - bufferStartPoint);
         closeWindow();
     }
 

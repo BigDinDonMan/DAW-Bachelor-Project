@@ -1,16 +1,13 @@
 package utils;
 
+import lombok.AllArgsConstructor;
 import org.javatuples.Pair;
 
+@AllArgsConstructor
 public class SoundSelectionMapper {
 
     private int samplesPerPixel;
     private int frameSize;
-
-    public SoundSelectionMapper(int frameSize, int samplesPerPixel) {
-        this.samplesPerPixel = samplesPerPixel;
-        this.frameSize = frameSize;
-    }
 
     public Pair<Integer, Integer> map(double selectionStart, double selectionEnd) {
         int start = (int)(selectionStart * this.samplesPerPixel);

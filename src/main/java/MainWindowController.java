@@ -19,6 +19,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lombok.Getter;
+import lombok.Setter;
 import org.javatuples.Pair;
 import processing.Upsampler;
 import utils.*;
@@ -36,6 +38,8 @@ import java.util.stream.Collectors;
 
 public class MainWindowController implements Initializable {
 
+    @Getter
+    @Setter
     private Stage mainStage;
 
     @FXML
@@ -82,12 +86,12 @@ public class MainWindowController implements Initializable {
 //            dist.apply(clip.getSamples());
 //            Overdrive overdrive = new Overdrive();
 //            overdrive.apply(clip.getSamples());
-            SoundClip toUpsample = new SoundClip(System.getProperty("user.dir") + File.separator + "test.wav");
-            var targetFormat = new AudioFormat(44100, 16, 2, true, true);
-            Upsampler upsampler = new Upsampler(toUpsample.getAudioFormat(), targetFormat);
-            SoundClip resampled = new SoundClip(targetFormat, upsampler.apply(toUpsample.getSamples()));
-            SoundFileExporter exporter = new SoundFileExporter(resampled);
-            exporter.export(System.getProperty("user.dir") + File.separator + "resampled.wav");
+//            SoundClip toUpsample = new SoundClip(System.getProperty("user.dir") + File.separator + "test.wav");
+//            var targetFormat = new AudioFormat(44100, 16, 2, true, true);
+//            Upsampler upsampler = new Upsampler(toUpsample.getAudioFormat(), targetFormat);
+//            SoundClip resampled = new SoundClip(upsampler.apply(toUpsample.getSamples()), targetFormat);
+//            SoundFileExporter exporter = new SoundFileExporter(resampled);
+//            exporter.export(System.getProperty("user.dir") + File.separator + "resampled.wav");
             WaveformViewersContainer container = new WaveformViewersContainer();
             WaveformViewer viewer = new WaveformViewer(clip);
             waveformsVBox.getChildren().add(container);
@@ -227,7 +231,7 @@ public class MainWindowController implements Initializable {
         }
     }
 
-    @FXML//this isnt working, doesnt reset the clip to the start
+    @FXML
     private void stopTimeline() {
         if (audioPlayer.isPlaying()) {
             audioPlayer.reset();
@@ -275,8 +279,8 @@ public class MainWindowController implements Initializable {
                 float[] second = ArrayUtils.slice(samples, bufferBounds.getValue1(), samples.length);
                 SoundClip f1, f2;
                 AudioFormat fmt = file.getAudioFormat();
-                f1 = new SoundClip(file.getAudioFormat(), first);
-                f2 = new SoundClip(SoundClip.copyFormat(fmt), second);
+                f1 = new SoundClip(first, file.getAudioFormat());
+                f2 = new SoundClip(second, SoundClip.copyFormat(fmt));
 
                 WaveformViewersContainer container = ((WaveformViewersContainer)selected.getParent());
 
@@ -299,9 +303,9 @@ public class MainWindowController implements Initializable {
                 float[] ending = ArrayUtils.slice(samples, bufferBounds.getValue1(), samples.length);
                 SoundClip f1, f2, f3;
                 AudioFormat fmt = file.getAudioFormat();
-                f1 = new SoundClip(fmt, starting);
-                f2 = new SoundClip(SoundClip.copyFormat(fmt), middle);
-                f3 = new SoundClip(SoundClip.copyFormat(fmt), ending);
+                f1 = new SoundClip(starting, fmt);
+                f2 = new SoundClip(middle, SoundClip.copyFormat(fmt));
+                f3 = new SoundClip(ending, SoundClip.copyFormat(fmt));
 
                 WaveformViewersContainer container = ((WaveformViewersContainer)selected.getParent());
 
@@ -320,14 +324,6 @@ public class MainWindowController implements Initializable {
         }, () -> {
             new Alert(Alert.AlertType.ERROR, "Cannot cut non-selected audio fragment! Please select it first").showAndWait();
         });
-    }
-
-    public Stage getMainStage() {
-        return mainStage;
-    }
-
-    public void setMainStage(Stage mainStage) {
-        this.mainStage = mainStage;
     }
 
     @FXML

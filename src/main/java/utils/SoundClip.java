@@ -1,5 +1,8 @@
 package utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -9,10 +12,12 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+@Getter
+@AllArgsConstructor
 public class SoundClip {
 
-    private AudioFormat audioFormat;
     private float[] samples;
+    private AudioFormat audioFormat;
 
     public SoundClip(String path) throws IOException, UnsupportedAudioFileException {
         AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
@@ -54,22 +59,9 @@ public class SoundClip {
         }
     }
 
-    public SoundClip(AudioFormat fmt, float[] samples) {
-        this.samples = samples;
-        this.audioFormat = fmt;
-    }
-
     public long getDurationInMillis() {
         var samplesPerSecond = this.audioFormat.getChannels() * this.audioFormat.getSampleRate();
         return (long)((this.samples.length / samplesPerSecond) * 1000L);
-    }
-
-    public float[] getSamples() {
-        return this.samples;
-    }
-
-    public AudioFormat getAudioFormat() {
-        return this.audioFormat;
     }
 
     public static AudioFormat copyFormat(AudioFormat fmt) {

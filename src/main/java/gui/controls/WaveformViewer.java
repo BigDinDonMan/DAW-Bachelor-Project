@@ -325,7 +325,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                         //todo: fix this because we have parameterless sound effect
                         Processing effect = (Processing)klass.getConstructor().newInstance();
                         var newBuffer = effect.apply(soundClip.getSamples());
-                        soundClip = new SoundClip(soundClip.getAudioFormat(), newBuffer);
+                        soundClip = new SoundClip(newBuffer, soundClip.getAudioFormat());
                     } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException exc) {
                         exc.printStackTrace();
                     }

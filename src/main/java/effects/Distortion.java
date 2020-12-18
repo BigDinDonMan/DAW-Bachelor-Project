@@ -1,5 +1,6 @@
 package effects;
 
+import lombok.AllArgsConstructor;
 import utils.MathUtils;
 
 import java.util.HashMap;
@@ -9,13 +10,10 @@ import java.util.function.Function;
 //todo: add distortion clipping type (hard clipping, soft clipping, etc.)
 //teoretycznie można zrobić abstrakcyjną klasę Distortion i z niej dziedziczyć poszczególne implementacje (soft clipped, hard clipped etc.)
 
+@AllArgsConstructor
 public class Distortion implements SoundEffect {
 
     private float gain;
-
-    public Distortion(float gain) {
-        this.gain = gain;
-    }
 
     @Override
     public void apply(float[] buffer, int offset, int len) {

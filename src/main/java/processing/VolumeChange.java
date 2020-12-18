@@ -1,15 +1,12 @@
 package processing;
 
+import lombok.AllArgsConstructor;
 import utils.MathUtils;
 
+@AllArgsConstructor
 public class VolumeChange implements Processing {
 
     private float multiplier;
-
-    public VolumeChange(float mult) {
-        this.multiplier = mult;
-    }
-
 
     @Override
     public float[] apply(float[] buffer) {

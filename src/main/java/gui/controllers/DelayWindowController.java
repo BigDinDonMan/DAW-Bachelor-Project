@@ -59,7 +59,7 @@ public class DelayWindowController extends EffectWindowController implements Ini
             throw new IllegalArgumentException("Cannot use null TimeUnit and delay value cannot be negative!");
         }
         Delay d = new Delay(getAudioFile().getAudioFormat(), value, unit);
-        d.apply(file.getSamples(), bufferStartPoint, bufferEndPoint);
+        d.apply(file.getSamples(), bufferStartPoint, bufferEndPoint - bufferStartPoint);
         closeWindow();
     }
 }
