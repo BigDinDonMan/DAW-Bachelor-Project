@@ -22,4 +22,8 @@ public class MathUtils {
         if (value < min) return min;
         return value;
     }
+
+    public static float lerp(float a, float b, float fraction) {
+        return (a * (1f - fraction)) + (b * fraction);
+    }
 }

@@ -20,10 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.javatuples.Pair;
-import utils.ArrayUtils;
-import utils.AudioPlayer;
-import utils.SoundClip;
-import utils.SoundSelectionMapper;
+import processing.Upsampler;
+import utils.*;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineEvent;
@@ -84,6 +82,12 @@ public class MainWindowController implements Initializable {
 //            dist.apply(clip.getSamples());
 //            Overdrive overdrive = new Overdrive();
 //            overdrive.apply(clip.getSamples());
+            SoundClip toUpsample = new SoundClip(System.getProperty("user.dir") + File.separator + "test.wav");
+            var targetFormat = new AudioFormat(44100, 16, 2, true, true);
+            Upsampler upsampler = new Upsampler(toUpsample.getAudioFormat(), targetFormat);
+            SoundClip resampled = new SoundClip(targetFormat, upsampler.apply(toUpsample.getSamples()));
+            SoundFileExporter exporter = new SoundFileExporter(resampled);
+            exporter.export(System.getProperty("user.dir") + File.separator + "resampled.wav");
             WaveformViewersContainer container = new WaveformViewersContainer();
             WaveformViewer viewer = new WaveformViewer(clip);
             waveformsVBox.getChildren().add(container);
