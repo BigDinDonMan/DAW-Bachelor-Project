@@ -23,8 +23,11 @@ public class SoundClip {
         AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
         this.audioFormat = stream.getFormat();
 
-        this.samples = new float[stream.available()];
+        int samplesCount = stream.available() / (audioFormat.getSampleSizeInBits() / 8);
+
+        this.samples = new float[samplesCount];
         int index = 0;
+        int total = 0;
         try (var audioStream = stream) {
 
             byte[] tempBuffer = new byte[audioFormat.getFrameSize()];
@@ -32,7 +35,7 @@ public class SoundClip {
             while (audioStream.available() > 0) {
                 int read = audioStream.read(tempBuffer);
                 if (read == -1) break;
-                ByteBuffer bb = ByteBuffer.wrap(tempBuffer).order(ByteOrder.nativeOrder());
+                ByteBuffer bb = ByteBuffer.wrap(tempBuffer).order(audioFormat.isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
                 switch (audioFormat.getSampleSizeInBits() / 8) {
                     case 1:
                         for (int i = 0; i < read; ++i) {

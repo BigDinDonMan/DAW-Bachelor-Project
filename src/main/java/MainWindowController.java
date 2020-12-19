@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import org.javatuples.Pair;
+import processing.Resampler;
 import processing.Upsampler;
 import utils.*;
 
@@ -87,9 +88,9 @@ public class MainWindowController implements Initializable {
 //            Overdrive overdrive = new Overdrive();
 //            overdrive.apply(clip.getSamples());
 //            SoundClip toUpsample = new SoundClip(System.getProperty("user.dir") + File.separator + "test.wav");
-//            var targetFormat = new AudioFormat(44100, 16, 2, true, true);
-//            Upsampler upsampler = new Upsampler(toUpsample.getAudioFormat(), targetFormat);
-//            SoundClip resampled = new SoundClip(upsampler.apply(toUpsample.getSamples()), targetFormat);
+//            var targetFormat = new AudioFormat(44100, 16, 2, true, false);
+//            Resampler resampler = new Resampler(toUpsample.getAudioFormat(), targetFormat);
+//            SoundClip resampled = new SoundClip(resampler.apply(toUpsample.getSamples()), targetFormat);
 //            SoundFileExporter exporter = new SoundFileExporter(resampled);
 //            exporter.export(System.getProperty("user.dir") + File.separator + "resampled.wav");
             WaveformViewersContainer container = new WaveformViewersContainer();
@@ -271,7 +272,7 @@ public class MainWindowController implements Initializable {
             double end = bounds.getValue1();
             SoundClip file = selected.getSoundClip();
             float[] samples = file.getSamples();
-            SoundSelectionMapper mapper = new SoundSelectionMapper(file.getAudioFormat().getFrameSize(), selected.getSamplesPerPixel());
+            SoundSelectionMapper mapper = new SoundSelectionMapper(selected.getSamplesPerPixel(), file.getAudioFormat().getFrameSize());
             Pair<Integer, Integer> bufferBounds = mapper.map(start, end);
             if ((int)start == 0 && (int)end == (int)selected.getWidth()) return;
             if ((int)start == 0 || (int)end == (int)selected.getWidth()) {//split viewer into 2 from the start

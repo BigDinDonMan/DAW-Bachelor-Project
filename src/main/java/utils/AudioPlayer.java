@@ -50,25 +50,25 @@ public class AudioPlayer{
     private byte[] convertToBytes() {
         AudioFormat fmt = soundClip.getAudioFormat();
         var samples = soundClip.getSamples();
-
-        var tempBuffer = new byte[samples.length * (fmt.getSampleSizeInBits() / 8)];
+        var sampleSize = fmt.getSampleSizeInBits() / 8;
+        var tempBuffer = new byte[samples.length * sampleSize];
 
         for (int i = 0, bufIndex = 0; i < samples.length; ++i) {
-            switch (fmt.getSampleSizeInBits() / 8){
+            switch (sampleSize){
                 case 1:
                     byte b = (byte)(samples[i] * Byte.MAX_VALUE);
                     tempBuffer[bufIndex++] = b;
                     break;
                 case 2:
                     short s = (short)(samples[i] * Short.MAX_VALUE);
-                    ByteBuffer bb = ByteBuffer.allocate(2).order(ByteOrder.nativeOrder());
+                    ByteBuffer bb = ByteBuffer.allocate(2).order(fmt.isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
                     var bytes = bb.putShort(s).array();
                     tempBuffer[bufIndex++] = bytes[0];
                     tempBuffer[bufIndex++] = bytes[1];
                     break;
                 case 4:
                     float f = samples[i];
-                    ByteBuffer bb_f = ByteBuffer.allocate(4).order(ByteOrder.nativeOrder());
+                    ByteBuffer bb_f = ByteBuffer.allocate(4).order(fmt.isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
                     var f_bytes = bb_f.putFloat(f).array();
                     for (int j = 0; j < 4; ++j) {
                         tempBuffer[bufIndex++] = f_bytes[j];

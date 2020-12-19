@@ -31,7 +31,7 @@ public class SoundFileExporter {
                 break;
             case 2:
                 for (float sample : samples) {
-                    ByteBuffer bb = ByteBuffer.allocate(sampleSize).order(ByteOrder.nativeOrder());
+                    ByteBuffer bb = ByteBuffer.allocate(sampleSize).order(clip.getAudioFormat().isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
                     bb.putShort((short) (sample * Short.MAX_VALUE));
                     sampleBytes = bb.array();
                     for (int j = 0; j < sampleSize; ++j) {
@@ -41,7 +41,7 @@ public class SoundFileExporter {
                 break;
             case 4:
                 for (float sample : samples) {
-                    ByteBuffer _bb = ByteBuffer.allocate(sampleSize).order(ByteOrder.nativeOrder());
+                    ByteBuffer _bb = ByteBuffer.allocate(sampleSize).order(clip.getAudioFormat().isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
                     _bb.putFloat(sample);
                     sampleBytes = _bb.array();
                     for (int j = 0; j < sampleSize; ++j) {
