@@ -1,0 +1,59 @@
+
+.main-btn {
+    -fx-background-color: linear-gradient(to top right, rgba(0,0,0,1) 0%, rgba(255,255,255,1) 50%, rgba(0,0,0,1) 100%);
+    -fx-focus-color: black;
+}
+
+.main-btn:pressed {
+    -fx-opacity: 0.5;
+}
+
+.root {
+    /*-fx-background-color: linear-gradient(to top right, rgba(131,58,180,1) 0%, rgba(29,161,253,1) 35%, rgba(252,69,134,1) 100%);*/ /*ładny kolorek*/
+    -fx-background-color: linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,131,222,1) 50%, rgba(0,0,0,1) 100%);
+}
+
+.viewers-root {
+    -fx-background-color: rgb(122,200,255);
+}
+
+.menu-bar {
+    -fx-background-color: #1b1b1b;
+}
+
+.menu .label {
+    -fx-text-fill: white;
+}
+
+.menu {
+    -fx-background-color: #1b1b1b;
+}
+
+.menu-item {
+    -fx-background-color: #1b1b1b;
+}
+
+.menu:hover {
+    -fx-background-color: rgba(0,131,222,1);
+}
+
+.menu-item:hover {
+    -fx-focus-color: rgba(0,131,222,1);
+    -fx-background-color: rgba(0,131,222,1);
+}
+
+.menu-item:focused {
+    -fx-background-color: rgba(0,131,222,1);
+}
+
+.context-menu {
+    -fx-background-color: #1b1b1b;
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.options-background {
+    -fx-background-color: rgba(122,200,255);
+}

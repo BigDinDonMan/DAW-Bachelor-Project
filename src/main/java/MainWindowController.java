@@ -22,9 +22,10 @@ import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import org.javatuples.Pair;
-import processing.Resampler;
-import processing.Upsampler;
-import utils.*;
+import utils.ArrayUtils;
+import utils.AudioPlayer;
+import utils.SoundClip;
+import utils.SoundSelectionMapper;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineEvent;
@@ -37,6 +38,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+
+//todo: set new track container's width to the width of root
 public class MainWindowController implements Initializable {
 
     @Getter
@@ -83,6 +86,8 @@ public class MainWindowController implements Initializable {
         });
         try {
             SoundClip clip = new SoundClip(System.getProperty("user.dir") + File.separator + "00_otusznje.wav");
+//            Echo e = new Echo(clip.getAudioFormat(), 10, TimeUnit.MILLISECONDS, 3);
+//            e.apply(clip.getSamples());
 //            Distortion dist = new Distortion(2.5f);
 //            dist.apply(clip.getSamples());
 //            Overdrive overdrive = new Overdrive();
@@ -175,6 +180,7 @@ public class MainWindowController implements Initializable {
                 playButton.setDisable(!condition);
                 pauseButton.setDisable(condition);
                 stopButton.setDisable(condition);
+                loopingCheckBox.setDisable(!condition);
             });
         }
         //if selection is present, play just the selection

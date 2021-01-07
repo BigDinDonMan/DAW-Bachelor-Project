@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class DAWApplication extends javafx.application.Application {
 
@@ -12,6 +13,7 @@ public class DAWApplication extends javafx.application.Application {
         MainWindowController controller = loader.getController();
         controller.setMainStage(stage);
         Scene s = new Scene(root);
+        s.getStylesheets().addAll(BootstrapFX.bootstrapFXStylesheet(), getClass().getResource("styles/app-style.css").toExternalForm());
         stage.setScene(s);
         stage.setTitle("Digital Audio Workstation");
         stage.show();

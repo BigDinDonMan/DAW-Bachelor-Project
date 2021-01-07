@@ -12,8 +12,8 @@ public class SoundRecorder implements Runnable {
 
     private TargetDataLine sourceLine;
     private File outputFile;
-    private AtomicBoolean stopped;
     private AudioFormat recordingFormat;
+    private AtomicBoolean stopped;
 
     public SoundRecorder(AudioFormat fmt, TargetDataLine sourceLine, File outputFile) {
         this.sourceLine = sourceLine;

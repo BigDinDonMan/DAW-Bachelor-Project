@@ -27,7 +27,6 @@ public class SoundClip {
 
         this.samples = new float[samplesCount];
         int index = 0;
-        int total = 0;
         try (var audioStream = stream) {
 
             byte[] tempBuffer = new byte[audioFormat.getFrameSize()];

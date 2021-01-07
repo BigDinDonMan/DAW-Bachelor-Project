@@ -35,22 +35,15 @@ public class Resampler implements Processing {
     public float[] apply(float[] buffer){
         byte[] bytes = convertToBytes(buffer, sourceFormat);
         AudioInputStream inputStream = new AudioInputStream(new ByteArrayInputStream(bytes), sourceFormat, bytes.length);
-        try {
+        try (AudioInputStream converted = AudioSystem.getAudioInputStream(targetFormat, inputStream);
+                AudioInputStream ais = inputStream) {
             File tmp = File.createTempFile("tmp-resampled",null);
-            AudioInputStream converted = AudioSystem.getAudioInputStream(targetFormat, inputStream);
             AudioSystem.write(converted, AudioFileFormat.Type.WAVE, tmp);
             SoundClip c = new SoundClip(tmp.getAbsolutePath());
             tmp.delete();
-            converted.close();
             return c.getSamples();
         } catch (IOException | UnsupportedAudioFileException e) {
             e.printStackTrace(System.err);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return new float[0];
     }

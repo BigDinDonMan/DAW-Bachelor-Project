@@ -13,12 +13,12 @@
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="140.0" layoutY="366.0" prefHeight="45.0" prefWidth="171.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Apply" onAction="#applyEffect" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Apply" onAction="#applyEffect" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="2.5" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#closeWindow" text="Close" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#closeWindow" text="Close" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="2.5" />
                </HBox.margin>

@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="446.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RecordingWindowController">
+<AnchorPane styleClass="root" fx:id="root" prefHeight="446.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RecordingWindowController">
    <children>
       <HBox alignment="CENTER" layoutX="207.0" layoutY="320.0" prefHeight="66.0" prefWidth="229.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
-            <Button fx:id="startRecordingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startRecording" text="Start" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" fx:id="startRecordingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startRecording" text="Start" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="stopRecordingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopRecording" text="Stop" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" fx:id="stopRecordingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopRecording" text="Stop" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>

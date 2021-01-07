@@ -14,19 +14,19 @@
    <children>
       <HBox layoutX="145.0" layoutY="224.0" prefHeight="37.0" prefWidth="166.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Apply" HBox.hgrow="ALWAYS" onAction="#applyEffect">
+            <Button styleClass="main-btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Apply" HBox.hgrow="ALWAYS" onAction="#applyEffect">
                <HBox.margin>
                   <Insets right="2.5" />
                </HBox.margin>
             </Button>
-            <Button fx:id="closeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#closeWindow" text="Close" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" fx:id="closeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#closeWindow" text="Close" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="2.5" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="232.0" prefWidth="296.0" text="Delay options" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0">
+      <TitledPane styleClass="options-background" animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="232.0" prefWidth="296.0" text="Delay options" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0">
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>

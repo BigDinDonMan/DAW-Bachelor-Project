@@ -10,10 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
+import org.kordamp.bootstrapfx.BootstrapFX;
 import org.reflections.Reflections;
 import processing.ChannelSplit;
 import processing.Processing;
@@ -310,6 +308,8 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                             (int)((selection.getSelectionRect().getX() + selection.getSelectionRect().getWidth()) * samplesPerPixel)
                     );
                     Scene s = new Scene(p);
+                    var style = getClass().getClassLoader().getResource("styles/app-style.css").toExternalForm();
+                    s.getStylesheets().addAll(style, BootstrapFX.bootstrapFXStylesheet());
                     Stage stage = new Stage();
                     stage.setScene(s);
                     stage.setTitle(windowName + " properties");
@@ -329,6 +329,9 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                     } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException exc) {
                         exc.printStackTrace();
                     }
+                } catch (NullPointerException ex) {
+                    new Alert(Alert.AlertType.INFORMATION, "Not implemented yet. Sorry!").showAndWait();
+                    return;
                 }
             });
             list.add(item);

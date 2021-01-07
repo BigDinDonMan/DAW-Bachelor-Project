@@ -1,26 +1,22 @@
 package gui.controllers;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.base.Ticker;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import utils.SoundRecorder;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.ByteOrder;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RecordingWindowController implements Initializable {
 

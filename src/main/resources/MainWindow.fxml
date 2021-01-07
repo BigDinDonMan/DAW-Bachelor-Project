@@ -17,11 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="517.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindowController">
+<AnchorPane prefHeight="423.0" prefWidth="849.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindowController">
    <children>
       <ScrollPane fx:id="waveformViewersContainer" fitToHeight="true" fitToWidth="true" focusTraversable="false" layoutX="72.0" layoutY="186.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="762.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <content>
-            <VBox fx:id="waveformsVBox" fillWidth="false" maxWidth="1.7976931348623157E308" prefWidth="845.0" style="-fx-background-color: lightgray;" />
+            <VBox fx:id="waveformsVBox" fillWidth="false" maxWidth="1.7976931348623157E308" prefWidth="845.0" styleClass="viewers-root" />
          </content>
       </ScrollPane>
       <MenuBar layoutY="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -59,109 +59,115 @@
           <Menu mnemonicParsing="false" text="Help" />
         </menus>
       </MenuBar>
-      <HBox layoutX="17.0" layoutY="251.0" prefHeight="48.0" prefWidth="353.0" style="-fx-border-color: gray;">
+      <AnchorPane layoutX="17.0" layoutY="251.0" prefHeight="60.0" prefWidth="507.0" AnchorPane.bottomAnchor="218.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="325.0">
          <children>
-            <Button fx:id="playButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#playTimeline" HBox.hgrow="ALWAYS">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/play.png" />
-                     </image></ImageView>
-               </graphic>
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="pauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseTimeline" HBox.hgrow="ALWAYS">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/pause.png" />
-                     </image></ImageView>
-               </graphic>
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="stopButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopTimeline" HBox.hgrow="ALWAYS">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/stop.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-            <Pane prefHeight="200.0" prefWidth="0.5" style="-fx-background-color: gray;">
-               <HBox.margin>
-                  <Insets left="2.0" right="2.0" />
-               </HBox.margin>
-            </Pane>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewWaveformContainer" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/plusicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <tooltip>
-                  <Tooltip text="Click to add new track line">
+            <HBox alignment="CENTER_LEFT" layoutY="11.0" prefHeight="64.0" prefWidth="379.0" style="-fx-border-color: gray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="playButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#playTimeline" styleClass="main-btn" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/play.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="pauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseTimeline" styleClass="main-btn" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/pause.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="stopButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopTimeline" styleClass="main-btn" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/stop.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Pane prefHeight="200.0" prefWidth="0.5" style="-fx-background-color: gray;">
+                     <HBox.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </HBox.margin>
+                  </Pane>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewWaveformContainer" styleClass="main-btn" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/plusicon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to add new track line">
 <!--                     <showDelay>-->
 <!--                        <Duration millis="500"/>-->
 <!--                     </showDelay>-->
                   </Tooltip>
-               </tooltip>
-            </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteLastWaveformContainer" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/minus-solid.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <tooltip>
-                  <Tooltip text="Click to remove last track line">
+                     </tooltip>
+                  </Button>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteLastWaveformContainer" styleClass="main-btn" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/minus-solid.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to remove last track line">
 <!--                     <showDelay>-->
 <!--                        <Duration millis="500"/>-->
 <!--                     </showDelay>-->
                   </Tooltip>
-               </tooltip>
-            </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#extendContainersSize" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="11.0" />
-               </font>
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/width-increase.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <tooltip>
-                  <Tooltip text="Increases clip timeline width">
+                     </tooltip>
+                  </Button>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#extendContainersSize" styleClass="main-btn" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/width-increase.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Increases clip timeline width">
 <!--                     <showDelay>-->
 <!--                        <Duration millis="500"/>-->
 <!--                     </showDelay>-->
                   </Tooltip>
-               </tooltip>
-            </Button>
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+            <CheckBox fx:id="loopingCheckBox" alignment="CENTER_RIGHT" layoutX="389.0" layoutY="20.0" mnemonicParsing="false" text="Play looping" />
          </children>
-      </HBox>
-      <CheckBox fx:id="loopingCheckBox" layoutX="378.0" layoutY="265.0" mnemonicParsing="false" text="Play looping" />
+      </AnchorPane>
    </children>
 </AnchorPane>

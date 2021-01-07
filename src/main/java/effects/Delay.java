@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class Delay implements SoundEffect {
 
-    private AudioFormat audioFormat;
-    private int timeValue;
-    private TimeUnit timeUnit;
+    protected AudioFormat audioFormat;
+    protected int timeValue;
+    protected TimeUnit timeUnit;
 
     @Override
     public void apply(float[] buffer, int offset, int length) {
