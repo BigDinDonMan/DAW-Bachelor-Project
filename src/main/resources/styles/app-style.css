@@ -1,4 +1,12 @@
 
+* {
+    root-background-color: linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,131,222,1) 50%, rgba(0,0,0,1) 100%);
+    secondary-background-color: rgb(122,200,255);
+    menu-background-color: #1b1b1b;
+    main-hover-color: rgba(0,131,222,1);
+}
+
+
 .main-btn {
     -fx-background-color: linear-gradient(to top right, rgba(0,0,0,1) 0%, rgba(255,255,255,1) 50%, rgba(0,0,0,1) 100%);
     -fx-focus-color: black;
@@ -10,15 +18,15 @@
 
 .root {
     /*-fx-background-color: linear-gradient(to top right, rgba(131,58,180,1) 0%, rgba(29,161,253,1) 35%, rgba(252,69,134,1) 100%);*/ /*ładny kolorek*/
-    -fx-background-color: linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,131,222,1) 50%, rgba(0,0,0,1) 100%);
+    -fx-background-color: root-background-color;
 }
 
 .viewers-root {
-    -fx-background-color: rgb(122,200,255);
+    -fx-background-color: secondary-background-color;
 }
 
 .menu-bar {
-    -fx-background-color: #1b1b1b;
+    -fx-background-color: menu-background-color;
 }
 
 .menu .label {
@@ -26,28 +34,28 @@
 }
 
 .menu {
-    -fx-background-color: #1b1b1b;
+    -fx-background-color: menu-background-color;
 }
 
 .menu-item {
-    -fx-background-color: #1b1b1b;
+    -fx-background-color: menu-background-color;
 }
 
 .menu:hover {
-    -fx-background-color: rgba(0,131,222,1);
+    -fx-background-color: main-hover-color;
 }
 
 .menu-item:hover {
-    -fx-focus-color: rgba(0,131,222,1);
-    -fx-background-color: rgba(0,131,222,1);
+    -fx-focus-color: main-hover-color;
+    -fx-background-color: main-hover-color;
 }
 
 .menu-item:focused {
-    -fx-background-color: rgba(0,131,222,1);
+    -fx-background-color: main-hover-color;
 }
 
 .context-menu {
-    -fx-background-color: #1b1b1b;
+    -fx-background-color: menu-background-color;
 }
 
 .menu-item .label {
@@ -55,5 +63,44 @@
 }
 
 .options-background {
-    -fx-background-color: rgba(122,200,255);
+    -fx-background-color: menu-background-color;
+}
+
+.options-background > .title {
+    -fx-background-color: menu-background-color;
+    -fx-text-fill: white;
+}
+
+.options-background > .title > .text {
+    -fx-fill: white;
+}
+
+.options-background > *.content {
+    -fx-background-color: secondary-background-color;
+}
+
+.combo-main {
+    -fx-background-color: menu-background-color;
+}
+
+.combo-main .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: menu-background-color;
+}
+
+.combo-main .list-cell:hover {
+    -fx-background-color: main-hover-color;
+}
+
+.combo-main .list-view {
+    -fx-background-color: menu-background-color;
+}
+
+.txt-field-main {
+    -fx-background-color: menu-background-color;
+    -fx-text-fill: white;
+}
+
+.label-main {
+    -fx-text-fill: white;
 }

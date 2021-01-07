@@ -14,21 +14,21 @@
 
 <AnchorPane fx:id="root" prefHeight="450.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ExportAudioFileWindowController">
    <children>
-      <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="347.0" prefWidth="421.0" text="Export options" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+      <TitledPane styleClass="options-background" animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="347.0" prefWidth="421.0" text="Export options" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <ComboBox fx:id="channelsComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Channels">
+                  <ComboBox styleClass="combo-main" fx:id="channelsComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Channels">
                      <VBox.margin>
                         <Insets bottom="10.0" top="15.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="sampleSizeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Sample size">
+                  <ComboBox styleClass="combo-main" fx:id="sampleSizeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Sample size">
                      <VBox.margin>
                         <Insets bottom="10.0" top="15.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="sampleRateComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Sample rate">
+                  <ComboBox styleClass="combo-main" fx:id="sampleRateComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Sample rate">
                      <VBox.margin>
                         <Insets bottom="10.0" top="15.0" />
                      </VBox.margin>
@@ -43,8 +43,8 @@
                         <Insets />
                      </VBox.margin>
                      <children>
-                        <TextField fx:id="fileLocationTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#chooseFileSaveLocation" text="Choose" wrapText="true">
+                        <TextField styleClass="txt-field-main" fx:id="fileLocationTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <Button styleClass="main-btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#chooseFileSaveLocation" text="Choose" wrapText="true">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -57,12 +57,12 @@
       </TitledPane>
       <HBox alignment="CENTER_RIGHT" layoutX="235.0" layoutY="386.0" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#export" text="Export" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#export" text="Export" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#close" text="Close" HBox.hgrow="ALWAYS">
+            <Button styleClass="main-btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#close" text="Close" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>

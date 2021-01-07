@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import org.javatuples.Pair;
+import org.kordamp.bootstrapfx.BootstrapFX;
 import utils.ArrayUtils;
 import utils.AudioPlayer;
 import utils.SoundClip;
@@ -156,6 +157,10 @@ public class MainWindowController implements Initializable {
             Parent p = loader.load();
             RecordingWindowController controller = loader.getController();
             Scene s = new Scene(p);
+            s.getStylesheets().addAll(
+                    BootstrapFX.bootstrapFXStylesheet(),
+                    getClass().getClassLoader().getResource("styles/app-style.css").toExternalForm()
+            );
             Stage stage = new Stage();
             stage.setOnCloseRequest(e -> controller.stopRecording());
             stage.setScene(s);
@@ -256,6 +261,10 @@ public class MainWindowController implements Initializable {
             Parent p = loader.load();
             Stage stage = new Stage();
             Scene s = new Scene(p);
+            s.getStylesheets().addAll(
+                    BootstrapFX.bootstrapFXStylesheet(),
+                    getClass().getClassLoader().getResource("styles/app-style.css").toExternalForm()
+            );
             stage.setTitle("Export file");
             stage.setScene(s);
             stage.initModality(Modality.APPLICATION_MODAL);

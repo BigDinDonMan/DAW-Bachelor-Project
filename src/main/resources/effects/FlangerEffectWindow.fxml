@@ -25,7 +25,7 @@
             </Button>
          </children>
       </HBox>
-      <TitledPane collapsible="false" layoutX="14.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" text="Flanger options" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="15.0">
+      <TitledPane styleClass="options-background" collapsible="false" layoutX="14.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" text="Flanger options" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="15.0">
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -36,7 +36,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField fx:id="sweepFrequencyTextField">
+                        <TextField styleClass="txt-field-main" fx:id="sweepFrequencyTextField">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
@@ -46,7 +46,7 @@
                               <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField fx:id="delayTextField">
+                        <TextField styleClass="txt-field-main" fx:id="delayTextField">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
@@ -56,7 +56,7 @@
                               <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField fx:id="sweepRangeTextField" />
+                        <TextField styleClass="txt-field-main" fx:id="sweepRangeTextField" />
                      </children>
                   </VBox>
                </children></AnchorPane>
