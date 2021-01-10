@@ -7,7 +7,7 @@ import utils.SoundClip;
 
 public abstract class EffectWindowController {
 
-    protected SoundClip file;
+    protected SoundClip clip;
     protected int bufferStartPoint;
     protected int bufferEndPoint;
     @FXML
@@ -15,17 +15,17 @@ public abstract class EffectWindowController {
 
     protected abstract void applyEffect() throws Exception;
 
-    public SoundClip getAudioFile() {
-        return file;
+    public SoundClip getAudioClip() {
+        return clip;
     }
 
-    public void setAudioFile(SoundClip f) {
-        this.file = f;
+    public void setAudioClip(SoundClip f) {
+        this.clip = f;
         setEditBounds(0, f.getSamples().length);
     }
 
-    public void setAudioFile(SoundClip f, int start, int end) {
-        setAudioFile(f);
+    public void setAudioClip(SoundClip f, int start, int end) {
+        setAudioClip(f);
         setEditBounds(start, end);
     }
 

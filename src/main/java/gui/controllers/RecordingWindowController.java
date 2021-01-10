@@ -118,7 +118,7 @@ public class RecordingWindowController implements Initializable {
     @FXML
     private void chooseRecordingLocation() {
         var fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound file (*.wav)", "*.wav");
+        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound clip (*.wav)", "*.wav");
         fileChooser.getExtensionFilters().add(wavFilter);
         var chosenFile = fileChooser.showSaveDialog(this.root.getScene().getWindow());
         if (chosenFile != null) {

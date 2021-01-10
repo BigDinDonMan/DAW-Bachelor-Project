@@ -16,10 +16,6 @@
     -fx-opacity: 0.5;
 }
 
-.root {
-    /*-fx-background-color: linear-gradient(to top right, rgba(131,58,180,1) 0%, rgba(29,161,253,1) 35%, rgba(252,69,134,1) 100%);*/ /*ładny kolorek*/
-    -fx-background-color: root-background-color;
-}
 
 .viewers-root {
     -fx-background-color: secondary-background-color;
@@ -27,6 +23,11 @@
 
 .menu-bar {
     -fx-background-color: menu-background-color;
+}
+
+.root {
+    /*-fx-background-color: linear-gradient(to top right, rgba(131,58,180,1) 0%, rgba(29,161,253,1) 35%, rgba(252,69,134,1) 100%);*/ /*ładny kolorek*/
+    -fx-background-color: root-background-color;
 }
 
 .menu .label {

@@ -14,7 +14,7 @@ public class ChannelSplit {
     private SoundClip file;
 
     public List<SoundClip> split() {
-        if (file == null) throw new NullPointerException("Sound file was null.");
+        if (file == null) throw new NullPointerException("Sound clip was null.");
         final float[] samples = file.getSamples();
         final AudioFormat fmt = file.getAudioFormat();
         List<SoundClip> result = new ArrayList<>();

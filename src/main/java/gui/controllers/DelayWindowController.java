@@ -4,9 +4,6 @@ import effects.Delay;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Callback;
 import org.apache.maven.shared.utils.StringUtils;
 
@@ -16,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DelayWindowController extends EffectWindowController implements Initializable {
 
-    //todo: inject sound file buffer or whatever into window controllers
+    //todo: inject sound clip buffer or whatever into window controllers
     //todo: do it in a new constructor
 
     @FXML
@@ -58,8 +55,8 @@ public class DelayWindowController extends EffectWindowController implements Ini
         if (unit == null || value < 0) {
             throw new IllegalArgumentException("Cannot use null TimeUnit and delay value cannot be negative!");
         }
-        Delay d = new Delay(getAudioFile().getAudioFormat(), value, unit);
-        d.apply(file.getSamples(), bufferStartPoint, bufferEndPoint - bufferStartPoint);
+        Delay d = new Delay(getAudioClip().getAudioFormat(), value, unit);
+        d.apply(clip.getSamples(), bufferStartPoint, bufferEndPoint - bufferStartPoint);
         closeWindow();
     }
 }

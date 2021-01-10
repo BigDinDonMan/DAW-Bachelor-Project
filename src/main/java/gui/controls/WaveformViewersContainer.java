@@ -49,18 +49,18 @@ public class WaveformViewersContainer extends Pane {
                     ex.printStackTrace();
                 }
 //                if (result.isPresent() && result.get().equals(ButtonType.YES)) {
-//                    var path = System.getProperty("user.dir") + File.separator + "TempAudioFiles" + File.separator + file.getName();
+//                    var path = System.getProperty("user.dir") + File.separator + "TempAudioFiles" + File.separator + clip.getName();
 //                    var destFile = new File(path);
 //                    try {
-//                        FileUtils.copyFile(file, destFile);
-//                        file = destFile;
+//                        FileUtils.copyFile(clip, destFile);
+//                        clip = destFile;
 //                    } catch (IOException ex) {
 //                        ex.printStackTrace();
 //                    }
 //                }
 //
 //                try {
-//                    var provider = ProviderFactory.fromFile(file);
+//                    var provider = ProviderFactory.fromFile(clip);
 //                    var viewer = new WaveformViewer(provider);
 //                    viewer.setLayoutX(e.getX());
 //                    viewer.setLayoutY(0d);

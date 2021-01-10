@@ -293,7 +293,9 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
 
     private void setupContextMenu() {
         BiFunction<Class, List<MenuItem>, BiConsumer<String, String>> menuItemMapper = (klass, list) -> (fxmlFilePrefix, fxmlFileSuffix) -> {
-            var menuItemNameParts = Arrays.stream(StringUtils.splitUppercase(klass.getSimpleName())).map(String::toLowerCase).toArray(String[]::new);
+            var menuItemNameParts = Arrays.stream(StringUtils.splitUppercase(klass.getSimpleName())).
+                    map(String::toLowerCase).
+                    toArray(String[]::new);
             menuItemNameParts[0] = org.apache.maven.shared.utils.StringUtils.capitalise(menuItemNameParts[0]);
             var item = new MenuItem(String.join(" ", menuItemNameParts));
             item.setOnAction(e -> {
@@ -302,7 +304,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                 try {
                     Parent p = loader.load();
                     EffectWindowController controller = loader.getController();
-                    controller.setAudioFile(
+                    controller.setAudioClip(
                             soundClip,
                             (int)(selection.getSelectionRect().getX() * samplesPerPixel),
                             (int)((selection.getSelectionRect().getX() + selection.getSelectionRect().getWidth()) * samplesPerPixel)
@@ -338,7 +340,7 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
         };
 
         Reflections effectReflections = new Reflections("effects");
-        var effectSubtypes = effectReflections.getSubTypesOf(SoundEffect.class);
+        Set<Class<? extends SoundEffect>> effectSubtypes = effectReflections.getSubTypesOf(SoundEffect.class);
         audioEditContextMenu = new ContextMenu();
 
         var clearMenuItem = new MenuItem("Clear selection");

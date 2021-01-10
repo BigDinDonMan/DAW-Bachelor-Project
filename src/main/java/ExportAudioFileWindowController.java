@@ -208,7 +208,7 @@ public class ExportAudioFileWindowController implements Initializable {
     @FXML
     private void chooseFileSaveLocation() {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound file (*.wav)", "*.wav");
+        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound clip (*.wav)", "*.wav");
         fileChooser.getExtensionFilters().add(wavFilter);
         File f = fileChooser.showSaveDialog(this.root.getScene().getWindow());
         if (f == null) return;

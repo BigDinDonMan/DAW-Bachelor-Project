@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -110,6 +111,8 @@ public class MainWindowController implements Initializable {
         pauseButton.setDisable(true);
 
         playbackPointerLine = new Line();
+        playbackPointerLine.setStrokeWidth(2.5);
+        playbackPointerLine.setStroke(Color.RED);
         playbackTimeline = new Timeline();
     }
 
@@ -265,7 +268,7 @@ public class MainWindowController implements Initializable {
                     BootstrapFX.bootstrapFXStylesheet(),
                     getClass().getClassLoader().getResource("styles/app-style.css").toExternalForm()
             );
-            stage.setTitle("Export file");
+            stage.setTitle("Export clip");
             stage.setScene(s);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -345,7 +348,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private void loadFile() {
         var fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound file (*.wav)", "*.wav");
+        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV sound clip (*.wav)", "*.wav");
         fileChooser.getExtensionFilters().add(wavFilter);
         var file = fileChooser.showOpenDialog(mainStage);
         if (file == null) return;
