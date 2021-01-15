@@ -13,9 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 public class DelayWindowController extends EffectWindowController implements Initializable {
 
-    //todo: inject sound clip buffer or whatever into window controllers
-    //todo: do it in a new constructor
-
     @FXML
     private TextField delayTimeTextField;
     @FXML

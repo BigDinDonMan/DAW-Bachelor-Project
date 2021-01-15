@@ -16,8 +16,7 @@ public class VolumeChange implements Processing {
     @Override
     public float[] apply(float[] buffer, int offset, int length) {
         for (int i = offset; i < offset + length; ++i) {
-            buffer[i] *= multiplier;
-            buffer[i] = MathUtils.clamp(buffer[i], -1f, 1f);
+            buffer[i] = MathUtils.clamp(buffer[i] * multiplier, -1f, 1f);
         }
         return buffer;
     }
