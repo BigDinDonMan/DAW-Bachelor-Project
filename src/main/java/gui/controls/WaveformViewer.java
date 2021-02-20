@@ -293,7 +293,8 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
 
     private void setupContextMenu() {
         BiFunction<Class, List<MenuItem>, BiConsumer<String, String>> menuItemMapper = (klass, list) -> (fxmlFilePrefix, fxmlFileSuffix) -> {
-            var menuItemNameParts = Arrays.stream(StringUtils.splitUppercase(klass.getSimpleName())).
+            var menuItemNameParts = Arrays.
+                    stream(StringUtils.splitUppercase(klass.getSimpleName())).
                     map(String::toLowerCase).
                     toArray(String[]::new);
             menuItemNameParts[0] = org.apache.maven.shared.utils.StringUtils.capitalise(menuItemNameParts[0]);
@@ -334,7 +335,6 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
                     }
                 } catch (NullPointerException ex) {
                     new Alert(Alert.AlertType.INFORMATION, "Not implemented yet. Sorry!").showAndWait();
-                    return;
                 }
             });
             list.add(item);
@@ -402,5 +402,9 @@ public class WaveformViewer extends javafx.scene.layout.Pane implements Initiali
 
     public int getSamplesPerPixel() {
         return this.samplesPerPixel;
+    }
+
+    public boolean isSelected() {
+        return this.selection.isPresent();
     }
 }

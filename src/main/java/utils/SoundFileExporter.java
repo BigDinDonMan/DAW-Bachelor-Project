@@ -23,6 +23,7 @@ public class SoundFileExporter {
         byte[] bytes = new byte[samples.length * sampleSize];
         int currentIndex = 0;
         byte[] sampleBytes;
+        ByteOrder order = clip.getAudioFormat().isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
         switch (sampleSize) {
             case 1:
                 for (int i = 0; i < samples.length; ++i) {
@@ -31,7 +32,7 @@ public class SoundFileExporter {
                 break;
             case 2:
                 for (float sample : samples) {
-                    ByteBuffer bb = ByteBuffer.allocate(sampleSize).order(clip.getAudioFormat().isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
+                    ByteBuffer bb = ByteBuffer.allocate(sampleSize).order(order);
                     bb.putShort((short) (sample * Short.MAX_VALUE));
                     sampleBytes = bb.array();
                     for (int j = 0; j < sampleSize; ++j) {
@@ -41,7 +42,7 @@ public class SoundFileExporter {
                 break;
             case 4:
                 for (float sample : samples) {
-                    ByteBuffer _bb = ByteBuffer.allocate(sampleSize).order(clip.getAudioFormat().isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
+                    ByteBuffer _bb = ByteBuffer.allocate(sampleSize).order(order);
                     _bb.putFloat(sample);
                     sampleBytes = _bb.array();
                     for (int j = 0; j < sampleSize; ++j) {
@@ -50,7 +51,8 @@ public class SoundFileExporter {
                 }
                 break;
         }
-        try (var stream = new AudioInputStream(new ByteArrayInputStream(bytes), clip.getAudioFormat(), bytes.length)) {
+        try (var bais = new ByteArrayInputStream(bytes);
+                var stream = new AudioInputStream(bais, clip.getAudioFormat(), bytes.length)) {
             AudioSystem.write(stream, AudioFileFormat.Type.WAVE, f);
         }
     }

@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -45,7 +50,6 @@ import java.util.stream.Collectors;
 public class MainWindowController implements Initializable {
 
     @Getter
-    @Setter
     private Stage mainStage;
 
     @FXML
@@ -87,7 +91,7 @@ public class MainWindowController implements Initializable {
             }
         });
         try {
-            SoundClip clip = new SoundClip(System.getProperty("user.dir") + File.separator + "00_otusznje.wav");
+            SoundClip clip = new SoundClip(System.getProperty("user.dir") + File.separator + "LRMonoPhase4.wav");
 //            Echo e = new Echo(clip.getAudioFormat(), 10, TimeUnit.MILLISECONDS, 3);
 //            e.apply(clip.getSamples());
 //            Distortion dist = new Distortion(2.5f);
@@ -114,6 +118,44 @@ public class MainWindowController implements Initializable {
         playbackPointerLine.setStrokeWidth(2.5);
         playbackPointerLine.setStroke(Color.RED);
         playbackTimeline = new Timeline();
+    }
+
+    public void setMainStage(Stage s) {
+        this.mainStage = s;
+        KeyCodeCombination downCombination = new KeyCodeCombination(KeyCode.DOWN, KeyCombination.CONTROL_DOWN);
+        KeyCodeCombination upCombination = new KeyCodeCombination(KeyCode.UP, KeyCombination.CONTROL_DOWN);
+        mainStage.getScene().getAccelerators().put(downCombination, () -> {
+            var opt = waveformsVBox.getChildren().stream().
+                    filter(c -> ((WaveformViewersContainer)c).getChildren().stream().anyMatch(v -> ((WaveformViewer)v).isSelected())).
+                    findFirst();
+            opt.ifPresent(container -> {
+                var childOpt = ((WaveformViewersContainer)container).getChildren().stream().filter(v -> ((WaveformViewer)v).isSelected()).findFirst();
+                childOpt.ifPresent(viewer -> {
+                    WaveformViewer wv = (WaveformViewer)viewer;
+                    var indexOfParent = waveformsVBox.getChildren().indexOf(container);
+                    if (indexOfParent != waveformsVBox.getChildren().size() - 1) {
+                        ((WaveformViewersContainer)container).getChildren().remove(wv);
+                        ((WaveformViewersContainer)waveformsVBox.getChildren().get(indexOfParent + 1)).getChildren().add(wv);
+                    }
+                });
+            });
+        });
+        mainStage.getScene().getAccelerators().put(upCombination, () -> {
+            var opt = waveformsVBox.getChildren().stream().
+                    filter(c -> ((WaveformViewersContainer)c).getChildren().stream().anyMatch(v -> ((WaveformViewer)v).isSelected())).
+                    findFirst();
+            opt.ifPresent(container -> {
+                var childOpt = ((WaveformViewersContainer)container).getChildren().stream().filter(v -> ((WaveformViewer)v).isSelected()).findFirst();
+                childOpt.ifPresent(viewer -> {
+                    WaveformViewer wv = (WaveformViewer)viewer;
+                    var indexOfParent = waveformsVBox.getChildren().indexOf(container);
+                    if (indexOfParent != 0) {
+                        ((WaveformViewersContainer)container).getChildren().remove(wv);
+                        ((WaveformViewersContainer)waveformsVBox.getChildren().get(indexOfParent - 1)).getChildren().add(wv);
+                    }
+                });
+            });
+        });
     }
 
     @FXML
@@ -194,7 +236,7 @@ public class MainWindowController implements Initializable {
         //if selection is present, play just the selection
         //else play everything
         WaveformViewer selected = WaveformViewer.getSelected();
-        if (selected != null) { //fixme: pass sound clip that corresponds to selection bounds to the audioplayer
+        if (selected != null) {
             if (selected.getSoundClip() != audioPlayer.getSoundClip()) {
                 audioPlayer.setSoundClip(selected.getSoundClip());
             }

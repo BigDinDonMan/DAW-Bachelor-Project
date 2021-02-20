@@ -2,6 +2,7 @@ package utils;
 
 import gui.controls.WaveformViewer;
 import gui.controls.WaveformViewersContainer;
+import processing.Resampler;
 
 import javax.sound.sampled.AudioFormat;
 import java.util.*;
@@ -39,8 +40,9 @@ public class TimelineToClipMapper {
             if (viewers.isEmpty()) continue;
             float[] clipBuffer = new float[clipBufferUnifiedSize];
             for (var viewer: viewers) {
+                Resampler rs = new Resampler(viewer.getSoundClip().getAudioFormat(), audioFormat);
                 int start = (int)viewer.getLayoutX() * spp;
-                float[] samples = viewer.getSoundClip().getSamples();
+                float[] samples = rs.apply(viewer.getSoundClip().getSamples());
                 for (int i = start, samplesIndex = 0; samplesIndex < samples.length && i < clipBuffer.length; ++i, ++samplesIndex) {
                     clipBuffer[i] = samples[samplesIndex];
                 }

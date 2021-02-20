@@ -19,6 +19,16 @@ public class SoundClip {
     private float[] samples;
     private AudioFormat audioFormat;
 
+    public static final AudioFormat DEFAULT_FORMAT = new AudioFormat(
+            AudioFormat.Encoding.PCM_SIGNED,
+            44100,
+            16,
+            2,
+            4,
+            44100,
+            false
+    );
+
     public SoundClip(String path) throws IOException, UnsupportedAudioFileException {
         AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
         this.audioFormat = stream.getFormat();
@@ -34,7 +44,8 @@ public class SoundClip {
             while (audioStream.available() > 0) {
                 int read = audioStream.read(tempBuffer);
                 if (read == -1) break;
-                ByteBuffer bb = ByteBuffer.wrap(tempBuffer).order(audioFormat.isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
+                ByteOrder order = audioFormat.isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
+                ByteBuffer bb = ByteBuffer.wrap(tempBuffer).order(order);
                 switch (audioFormat.getSampleSizeInBits() / 8) {
                     case 1:
                         for (int i = 0; i < read; ++i) {

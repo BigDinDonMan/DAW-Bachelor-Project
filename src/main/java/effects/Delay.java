@@ -1,6 +1,7 @@
 package effects;
 
 import lombok.AllArgsConstructor;
+import utils.ArrayUtils;
 import utils.MathUtils;
 
 import javax.sound.sampled.AudioFormat;
@@ -15,11 +16,12 @@ public class Delay implements SoundEffect {
 
     @Override
     public void apply(float[] buffer, int offset, int length) {
+        var original = ArrayUtils.slice(buffer, offset, offset + length);
         long delay = timeUnit.toMillis(timeValue);
         int delayInSamples = (int)(delay / 1000f * audioFormat.getSampleRate());
-        for (int i = offset, delayPtr = offset + delayInSamples;  i < offset + length; ++i, delayPtr = (delayPtr + 1) % buffer.length) {
-            float currentSample = buffer[i];
-            float currentDelaySample = buffer[delayPtr];
+        for (int i = offset, delayPtr = offset + delayInSamples;  i < offset + length; ++i, delayPtr = (delayPtr + 1) % original.length) {
+            float currentSample = original[i];
+            float currentDelaySample = original[delayPtr];
             final float finalValue = MathUtils.clamp(currentSample + currentDelaySample, -1f, 1f);
             buffer[i] = finalValue;
         }

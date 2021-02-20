@@ -11,10 +11,10 @@ public class DAWApplication extends javafx.application.Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         Parent root = loader.load();
         MainWindowController controller = loader.getController();
-        controller.setMainStage(stage);
         Scene s = new Scene(root);
         s.getStylesheets().addAll(BootstrapFX.bootstrapFXStylesheet(), getClass().getResource("styles/app-style.css").toExternalForm());
         stage.setScene(s);
+        controller.setMainStage(stage);
         stage.setTitle("Digital Audio Workstation");
         stage.show();
     }

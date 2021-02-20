@@ -34,9 +34,8 @@ public class Resampler implements Processing {
     @Override
     public float[] apply(float[] buffer){
         byte[] bytes = convertToBytes(buffer, sourceFormat);
-        AudioInputStream inputStream = new AudioInputStream(new ByteArrayInputStream(bytes), sourceFormat, bytes.length);
-        try (AudioInputStream converted = AudioSystem.getAudioInputStream(targetFormat, inputStream);
-                AudioInputStream ais = inputStream) {
+        try (var inputStream = new AudioInputStream(new ByteArrayInputStream(bytes), sourceFormat, bytes.length);
+             var converted = AudioSystem.getAudioInputStream(targetFormat, inputStream)) {
             File tmp = File.createTempFile("tmp-resampled",null);
             AudioSystem.write(converted, AudioFileFormat.Type.WAVE, tmp);
             SoundClip c = new SoundClip(tmp.getAbsolutePath());
